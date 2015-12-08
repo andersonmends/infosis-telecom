@@ -1,0 +1,383 @@
+<?xml version="1.0"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+	<style>
+.semBorda tr, .semBorda td {
+	border: none !important;
+	background: none !important;
+}
+
+.larguraPanelGrid {
+	width: 150px
+}
+
+.larguraInput {
+	width: 470px
+}
+
+.ui-datatable, .ui-inputText {
+	font-size: 10px !important;
+}
+</style>
+
+</h:head>
+
+
+
+<h:form id="formPrincipal">
+	<p:growl id="messages" autoUpdate="true" life="2000" />
+
+	<br />
+	<br />
+
+	<p:dataTable id="ramaisTabela" var="ramal"
+		value="#{consultaBean.ramais}" paginator="true" rows="25"
+		selectionMode="single" selection="#{consultaBean.selectRamal}"
+		rowKey="#{ramal.fone}" onRowSelectComplete="dlgEdit.show()"
+		paginatorPosition="bottom" paginatorAlwaysVisible="true"
+		loadingMessage="Buscando..." pageLinks="5">
+
+		<p:ajax event="rowSelect" update=":formPrincipal"
+			oncomplete="dlgEdit.show()" listener="#{consultaBean.onRowSelect}" />
+
+
+		<p:column filterBy="#{ramal.fone}" sortBy="#{ramal.fone} " width="100"
+			headerText="Ramal">
+
+			<h:outputText value="#{ramal.fone}" />
+		</p:column>
+
+
+		<p:column filterBy="#{ramal.orgao.cidade}"
+			sortBy="#{ramal.orgao.cidade}" width="100" headerText="Cidade">
+
+
+			<h:outputText value="#{ramal.orgao.cidade}" />
+		</p:column>
+
+
+		<!-- 				<p:column headerText="Prédio" filterBy="#{ramal.orgao.suborgao}" -->
+		<!-- 					sortBy="#{ramal.orgao.suborgao}" width="200"> -->
+
+		<!-- 					<f:facet name="header"> -->
+		<!-- 						<p:panelGrid columns="2" styleClass="semBorda"> -->
+		<!-- 							<h:outputLabel value="Prédio" style="margin-left:70px" /> -->
+		<!-- 						</p:panelGrid> -->
+		<!-- 					</f:facet> -->
+		<!-- 					<h:outputText value="#{ramal.orgao.suborgao}" /> -->
+		<!-- 				</p:column> -->
+
+
+		<p:column filterBy="#{ramal.orgao.localidade}"
+			sortBy="#{ramal.orgao.localidade}" width="400" headerText="Unidade">
+
+			<h:outputText value="#{ramal.orgao.localidade}" />
+		</p:column>
+
+		<p:column width="100" headerText="Local"
+			sortBy="#{ramal.nomenclatura}" filterBy="#{ramal.nomenclatura}">
+
+
+			<h:outputText value="#{ramal.nomenclatura}" />
+
+		</p:column>
+
+
+
+		<!-- 				<p:column width="38"> -->
+		<!-- 					<f:facet name="header"> -->
+		<!-- 						<p:panelGrid columns="1" styleClass="semBorda"> -->
+		<!-- 							<h:outputLabel value="Cat. D" /> -->
+		<!-- 							<p:commandLink icon="ui-icon-info" type="button" -->
+		<!-- 								styleClass="ui-icon ui-icon-info" onclick="dlgCategoria.show();" style="margin-left:10px"/> -->
+		<!-- 						</p:panelGrid> -->
+		<!-- 					</f:facet> -->
+		<!-- 					<h:outputText value="#{ramal.categoriaDiurna}" /> -->
+		<!-- 				</p:column> -->
+
+		<!-- 				<p:column width="38"> -->
+		<!-- 					<f:facet name="header"> -->
+		<!-- 						<p:panelGrid columns="1" styleClass="semBorda"> -->
+		<!-- 							<h:outputLabel value="Cat. N" /> -->
+		<!-- 							<p:commandLink icon="ui-icon-info" type="button" -->
+		<!-- 								styleClass="ui-icon ui-icon-info" onclick="dlgCategoria.show();" style="margin-left:10px" /> -->
+		<!-- 						</p:panelGrid> -->
+		<!-- 					</f:facet> -->
+		<!-- 					<h:outputText value="#{ramal.categoriaNoturna}" /> -->
+		<!-- 				</p:column> -->
+
+		<!-- 				<p:column width="80"> -->
+		<!-- 					<f:facet name="header"> -->
+		<!-- 						<p:panelGrid columns="1" styleClass="semBorda"> -->
+		<!-- 							<h:outputLabel value="Tipo de Ramal" /> -->
+		<!-- 							<p:commandLink icon="ui-icon-info" type="button" -->
+		<!-- 								styleClass="ui-icon ui-icon-info" onclick="dlgAparelho.show();" style="margin-left:22px" /> -->
+		<!-- 						</p:panelGrid> -->
+		<!-- 					</f:facet> -->
+
+		<!-- 					<h:outputText value="#{ramal.tipoRamal}" /> -->
+		<!-- 				</p:column> -->
+
+		<!-- 				<p:column width="60"> -->
+
+		<!-- 					<f:facet name="header"> -->
+		<!-- 						<p:panelGrid columns="1" styleClass="semBorda"> -->
+		<!-- 							<h:outputLabel value="Divulgação" /> -->
+		<!-- 							<p:commandLink icon="ui-icon-info" type="button" -->
+		<!-- 								styleClass="ui-icon ui-icon-info" -->
+		<!-- 								onclick="dlgDivulgacao.show();" style="margin-left:22px"/> -->
+		<!-- 						</p:panelGrid> -->
+		<!-- 					</f:facet> -->
+
+		<!-- 					<h:outputText value="#{ramal.divulgacao}" /> -->
+
+		<!-- 				</p:column> -->
+
+
+		<!-- 				<p:column width="100"> -->
+
+		<!-- 					<f:facet name="header"> -->
+		<!-- 						<p:panelGrid columns="1" styleClass="semBorda"> -->
+		<!-- 							<h:outputLabel value="Compartilhado" /> -->
+		<!-- 						</p:panelGrid> -->
+		<!-- 					</f:facet> -->
+
+		<!-- 					<h:outputText value="#{ramal.compartilhadoCom}" /> -->
+
+		<!-- 				</p:column> -->
+
+	</p:dataTable>
+
+	<!-- 
+__________________________________________________________________________________________________________________ 
+
+
+                              SESSÃO DO DIALOG DE EDITAR
+
+__________________________________________________________________________________________________________________
+-->
+
+	<p:dialog widgetVar="dlgEdit" id="dlgEdit" header="Editar" height="750"
+		width="740" modal="true" resizable="false">
+
+		<p:panelGrid id="pgridEdit" columns="2" styleClass="semBorda">
+
+			<h:outputText value="Centro de Custo" />
+			<p:inputText value="#{consultaBean.selectRamal.orgao.centroDeCusto}"
+				styleClass="larguraInput" readonly="true" />
+
+
+			<h:outputText value="Centro de Custo Antigo" />
+			<p:inputText
+				value="#{consultaBean.selectRamal.orgao.centroDeCustoAntigo}"
+				styleClass="larguraInput" readonly="true" />
+
+			<h:outputText value="Cidade" />
+			<p:inputText value="#{consultaBean.selectRamal.orgao.cidade}"
+				styleClass="larguraInput" readonly="true" />
+
+
+			<h:outputText value="Endereço" />
+			<p:inputText value="#{consultaBean.selectRamal.orgao.endereco}"
+				styleClass="larguraInput" readonly="true" />
+
+			<h:outputText value="Unidade" />
+			<p:inputText value="#{consultaBean.selectRamal.orgao.localidade}"
+				styleClass="larguraInput" readonly="true" />
+
+
+			<h:outputText value="Polo" />
+			<p:inputText value="#{consultaBean.selectRamal.orgao.polo}"
+				styleClass="larguraInput" readonly="true" />
+
+			<h:outputText value="Ramal" />
+			<p:inputText value="#{consultaBean.selectRamal.fone}"
+				styleClass="larguraInput" readonly="true" />
+
+			<h:outputText value="Data de Ativação" />
+			<p:inputText value="#{consultaBean.selectRamal.dataDeAtivacao}"
+				styleClass="larguraInput" readonly="true" />
+
+			<h:outputText value="Situação" />
+			<p:inputText value="#{consultaBean.selectRamal.situacao}"
+				styleClass="larguraInput" readonly="true" style="width: 470px"/>
+			
+
+			<h:outputText value="Circuito" />
+			<p:inputText value="#{consultaBean.selectRamal.circuito}"
+				styleClass="larguraInput" readonly="true" />
+
+			<h:outputText value="Categoria Diurna" />
+			<p:inputText value="#{consultaBean.selectRamal.categoriaDiurna}"
+				styleClass="larguraInput" readonly="true" />
+			
+
+			<h:outputText value="Categoria Noturna" />
+			<p:inputText value="#{consultaBean.selectRamal.categoriaNoturna}"
+				styleClass="larguraInput" readonly="true" />
+			
+
+			<h:outputText value="Tipo do Ramal" />
+			<p:inputText value="#{consultaBean.selectRamal.tipoDeRamal}"
+				styleClass="larguraInput" readonly="true" />
+			
+
+			<h:outputText value="Local" />
+			<p:inputText value="#{consultaBean.selectRamal.nomenclatura}"
+				styleClass="larguraInput" readonly="true" />
+
+			<h:outputText value="Compartilhado com" />
+			<p:inputText value="#{consultaBean.selectRamal.compartilhadoCom}"
+				styleClass="larguraInput" readonly="true" />
+
+			<h:outputText value="Tipo de Divulgação" />
+			<p:inputText value="#{consultaBean.selectRamal.divulgacao}"
+				styleClass="larguraInput" readonly="true" />
+			
+			<h:outputText value="Observações" />
+			<p:inputTextarea value="#{consultaBean.selectRamal.observacoes}"
+				styleClass="larguraInput" readonly="true" />
+
+		</p:panelGrid>
+		<br />
+
+		<!-- Botões desabilitados -->
+		<p:panelGrid columns="3" style="margin-left:300px"
+			styleClass="semBorda" rendered="false">
+
+			<p:commandButton value="Cancelar"
+				actionListener="#{consultaBean.cancelar()}" ajax="true"
+				update="ramaisTabela" onclick="dlgEdit.hide()" />
+
+			<p:commandButton value="Remover"
+				actionListener="#{consultaBean.remover()}" ajax="true"
+				update="ramaisTabela" onclick="dlgEdit.hide()"
+				style="margin-left:30px" />
+
+			<p:commandButton value="Confimar"
+				actionListener="#{consultaBean.atualizar}" update="ramaisTabela"
+				ajax="true" onclick="dlgEdit.hide()" />
+		</p:panelGrid>
+		<!-- Botões desabilitados -->
+
+	</p:dialog>
+
+
+	<!-- 
+____________________________________________________________________________________________________________________
+
+
+                  SESSÃO DO DIALOG DE INFORMAÇÕES
+
+_____________________________________________________________________________________________________________________
+-->
+
+
+	<p:dialog header="Categoria" widgetVar="dlgCategoria" height="220"
+		modal="true" resizable="false" id="dlgCategoria">
+
+		<h:outputText value="1: " style=" font-weight: bold;" />
+		<h:outputText
+			value="PE Conectado e ligações gratuitas (0800, 19x, 130x, etc)" />
+		<br />
+
+		<h:outputText value="2: " style=" font-weight: bold" />
+		<h:outputText value="PE Conectado, Serviços e Local Fixo" />
+		<br />
+
+		<h:outputText value="3: " style=" font-weight: bold;" />
+		<h:outputText value="PE Conectado, Serviços, Local Fixo e Celular" />
+		<br />
+
+		<h:outputText value="4: " style=" font-weight: bold;" />
+		<h:outputText
+			value="PE Conectado, Serviços, Local Fixo e Regional Fixo DDD 81 e 87" />
+		<br />
+
+		<h:outputText value="5: " style=" font-weight: bold;" />
+		<h:outputText
+			value="PE Conectado, Serviços, Local Fixo e Celular e Regional Fixo DDD 81 e 87" />
+		<br />
+
+		<h:outputText value="6: " style=" font-weight: bold;" />
+		<h:outputText
+			value="PE Conectado, Serviços, Local Fixo e Celular e Regional Fixo e Celular DDD 81 e 87" />
+		<br />
+
+		<h:outputText value="7: " style=" font-weight: bold;" />
+		<h:outputText
+			value="PE Conectado, Serviços, Local Fixo, Regional Fixo DDD 81 e 87 e DDD Nacional Fixo" />
+		<br />
+
+		<h:outputText value="8: " style=" font-weight: bold;" />
+		<h:outputText
+			value="PE Conectado, Serviços, Local Fixo e Celular e DDD Nacional Fixo" />
+		<br />
+
+		<h:outputText value="9: " style=" font-weight: bold;" />
+		<h:outputText
+			value="PE Conectado, Serviços, Local Fixo e Celular, Regional Fixo e Celular DDD 81 e 87 e DDD Nacional Fixo" />
+		<br />
+		<h:outputText value="10: " style=" font-weight: bold;" />
+		<h:outputText
+			value="PE Conectado, Serviços, Local Fixo e Celular, Regional Fixo e Celular DDD 81 e 87 e DDD Nacional Fixo e Celular" />
+		<br />
+
+		<h:outputText value="11: " style=" font-weight: bold;" />
+		<h:outputText
+			value="PE Conectado, Serviços, Local Fixo e Celular, Regional Fixo e Celular DDD 81 e 87, DDD Nacional Fixo e Celular e Internacional" />
+		<br />
+
+	</p:dialog>
+
+	<p:dialog header="Tipo de Aparelho" widgetVar="dlgAparelho" height="70"
+		modal="true" resizable="false" id="dlgAparelho">
+
+		<h:outputText value="A: " style=" font-weight: bold;" />
+		<h:outputText value="Telefone análogico" />
+		<br />
+		<h:outputText value="D: " style=" font-weight: bold;" />
+		<h:outputText value="Telefone digital" />
+		<br />
+		<h:outputText value="IP: " style=" font-weight: bold;" />
+		<h:outputText value="Telefone VoIP" />
+
+	</p:dialog>
+
+	<p:dialog header="Usuário do Ramal" widgetVar="dlgUsuario" height="70"
+		modal="true" resizable="false" id="dlgUsuario">
+
+		<h:outputText value="Chefe Secretaria: " style=" font-weight: bold;" />
+		<h:outputText value="Ligações......" />
+		<br />
+		<h:outputText value="Juiz: " style=" font-weight: bold;" />
+		<h:outputText value="Ligações......" />
+		<br />
+
+	</p:dialog>
+
+	<p:dialog header="Tipo de Divulgação" widgetVar="dlgDivulgacao"
+		height="70" modal="true" resizable="false" id="dlgDivulgacao">
+
+		<h:outputText value="Não: " style=" font-weight: bold;" />
+		<h:outputText value="Ramal sem divulgação nenhuma" />
+		<br />
+		<h:outputText value="Interno: " style=" font-weight: bold;" />
+		<h:outputText value="Ramal para divulgação interna dentro do TJPE" />
+		<br />
+		<h:outputText value="Externo: " style=" font-weight: bold;" />
+		<h:outputText
+			value="Ramal externa ao TJPE, incluindo público em geral" />
+		<br />
+
+	</p:dialog>
+
+</h:form>
+
+</html>

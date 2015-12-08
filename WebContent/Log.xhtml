@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<f:view
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head>
+		<style>
+.semBorda tr, .semBorda td {
+	border: none !important;
+	background: none !important;
+}
+
+.larguraPanelGrid {
+	width: 100px
+}
+
+.larguraInput {
+	width: 500px
+}
+
+.ui-datatable, .ui-inputText {
+	font-size: 10px !important;
+}
+</style>
+
+
+	</h:head>
+
+	<h:body>
+		<h:form>
+
+			<p:panelGrid
+				style="width:900px"
+				columns="1"
+				styleClass="semBorda">
+
+				<h:outputText value="Selcione uma opção ao lado" />
+			</p:panelGrid>
+
+		</h:form>
+	</h:body>
+</f:view>
+
+
+
+

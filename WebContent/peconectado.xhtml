@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <p:panelGrid columns="2" styleClass="semBorda">
+        <h3>Incidente causado pela PE Conectado</h3>
+        <p:selectBooleanCheckbox value="#{peconectadoBean.visivel}"
+            style="margin-left: 20px">
+            <p:ajax listener="#{peconectadoBean.mostrar}"
+                update="conteudopeconectado" />
+        </p:selectBooleanCheckbox>
+    </p:panelGrid>
+
+
+    <h:form rendered="#{peconectadoBean.visivel}">
+        <p:separator />
+
+        <h3 style="margin-left: 10px">Fotos</h3>
+
+        <p:panelGrid styleClass="semBorda">
+            <p:row>
+                <p:column style="width:550px">
+                    <h3 style="margin-left: 18px">Rack</h3>
+                </p:column>
+                <p:column style="width:550px">
+                    <h3 style="margin-left: 18px">Sala</h3>
+                </p:column>
+            </p:row>
+
+            <p:row>
+                <p:column>
+                    <p:selectManyCheckbox layout="pageDirection">
+                        <f:selectItem itemLabel="Ramal não instalado" />
+                        <f:selectItem
+                            itemLabel="Modificação no rack do TJPE (path painel, bandejas, etc)" />
+                        <f:selectItem
+                            itemLabel="Fios da central telefonica até o rack desorganizados" />
+                        <f:selectItem
+                            itemLabel="Fios do rack foram desorganizados" />
+                    </p:selectManyCheckbox>
+                </p:column>
+
+                <p:column>
+                    <p:selectManyCheckbox layout="pageDirection">
+                        <f:selectItem
+                            itemLabel="Tomadas de telefone sem fixação" />
+                        <f:selectItem
+                            itemLabel="Fios até a tomada soltos, sem canelates/fixação" />
+                        <f:selectItem
+                            itemLabel="Modificação do pontos já criado da estrutura do TJPE" />
+                        <f:selectItem
+                            itemLabel="Tomadas de telefone sem fixação" />
+                    </p:selectManyCheckbox>
+                </p:column>
+
+            </p:row>
+            <p:row>
+
+                <p:column colspan="2">
+                    <h3>Observações</h3>
+                    <p:editor width="900" />
+                </p:column>
+
+            </p:row>
+
+
+        </p:panelGrid>
+
+    </h:form>
+
+
+</ui:composition>
+

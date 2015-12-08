@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <p:panelGrid styleClass="semBorda" columns="4">
+
+        <h:outputText value="Existe no-break" />
+        <p:selectOneRadio id="nobreak">
+
+            <f:selectItem itemValue="1" itemLabel="Sim" />
+            <f:selectItem itemValue="2" itemLabel="Não" />
+
+        </p:selectOneRadio>
+
+        <h:outputText value="Quantidade de computadores" />
+        <p:inputText maxlength="3" size="3"></p:inputText>
+
+        <h:outputText value="Ofício para DIRIEST enviado" />
+        <p:selectOneRadio id="diriest">
+
+            <f:selectItem itemValue="1" itemLabel="Sim" />
+            <f:selectItem itemValue="2" itemLabel="Não" />
+
+        </p:selectOneRadio>
+
+        <h:outputText value="Quantidade de computadores" />
+        <p:inputText maxlength="3" size="3"></p:inputText>
+
+        <h:outputText value="Recorrênica de incidente" />
+        <p:selectOneRadio id="recorrencia">
+
+            <f:selectItem itemValue="1" itemLabel="Constante" />
+            <f:selectItem itemValue="2" itemLabel="Ocasional" />
+            <f:selectItem itemValue="3" itemLabel="Nunca" />
+
+        </p:selectOneRadio>
+
+        <h:outputText value="Servidor de rede" />
+        <p:selectOneMenu>
+            <f:selectItem itemLabel="Proliante ML310" itemValue="1" />
+            <f:selectItem itemLabel="Proliante ML350" itemValue="2" />
+            <f:selectItem itemLabel="Power Edger R900" itemValue="3" />
+            <f:selectItem itemLabel="Proliante R70" itemValue="4" />
+            <f:selectItem itemLabel="X3500 M4" itemValue="5" />
+        </p:selectOneMenu>
+
+    </p:panelGrid>
+
+    <h3>Observações</h3>
+    <p:editor width="900" />
+
+</ui:composition>

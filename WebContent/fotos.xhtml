@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+        <p:spacer />
+
+        <p:galleria var="foto" value="#{fotoBean.fotos}"
+            panelHeight="487" panelWidth="650" showCaption="true"
+            style="margin-left:150px">
+            <p:graphicImage value="#{foto.endereco}" alt="#{foto.nome}" width="650" height="487" />
+        </p:galleria>
+
+        <p:spacer />
+
+        <p:fileUpload fileUploadListener="#{uploadBean.upload}"
+            fileLimit="6" allowTypes="/(\.|\/)(jpg|png|JPG|PNG)$/"
+            sizeLimit="100000000" update="messages" />
+        <p:growl id="messages" showDetail="true" />
+        <p:separator />
+
+</ui:composition>
+

@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <p:panelGrid columns="6" styleClass="semBorda">
+
+        <h:outputText value="Tipo de rack" />
+        <p:selectOneMenu>
+            <f:selectItem itemLabel="Chão" itemValue="1" />
+            <f:selectItem itemLabel="Bracket" itemValue="2" />
+            <f:selectItem itemLabel="Parede" itemValue="3" />
+        </p:selectOneMenu>
+
+        <h:outputText value="Quantidade de switch" />
+        <p:inputText maxlength="3" size="3" />
+
+        <h:outputText value="Quantidade de Path Panel" />
+        <p:inputText maxlength="3" size="3" />
+
+        <h:outputText value="Quantidade de Guia de Cabo" />
+        <p:inputText maxlength="3" size="3" />
+
+        <h:outputText value="Quantidade de Pontos de Rede" />
+        <p:inputText maxlength="3" size="3" />
+
+    </p:panelGrid>
+
+    <p:separator />
+
+    <p:panelGrid columns="2" styleClass="semBorda">
+        <h3>Necessidade de intervenção</h3>
+
+        <p:selectBooleanCheckbox value="#{infraestruturaBean.visivel}"
+            style="margin-left: 20px">
+            <p:ajax listener="#{infraestruturaBean.mostrar}"
+                update="conteudoinfraestrutura" />
+        </p:selectBooleanCheckbox>
+    </p:panelGrid>
+
+    <p:separator />
+
+
+    <p:panel visible="#{infraestruturaBean.visivel}"
+        style="margin-top:20px">
+
+        <p:separator />
+
+        <h3>Material Necessário</h3>
+
+        <p:panelGrid columns="5" styleClass="semBorda">
+
+            <p:outputLabel value="Item" />
+            <p:selectOneMenu style="width: 500px"
+                value="#{materialBean.nome}">
+
+                <f:selectItem itemLabel="Path Panel"
+                    itemValue="Path Panel" />
+                <f:selectItem itemLabel="Tampa Cega Vertical"
+                    itemValue="Tampa Cega Vertical" />
+                <f:selectItem itemLabel="Tampa Cega Horizontal"
+                    itemValue="Tampa Cega Horizontal" />
+                <f:selectItem itemLabel="Bandeja" itemValue="Bandeja" />
+                <f:selectItem itemLabel="Porca Gaiola para Rack"
+                    itemValue="Porca Gaiola para Rack" />
+                <f:selectItem itemLabel="Parafuso para Porca Gaiola"
+                    itemValue="Parafuso para Porca Gaiola" />
+                <f:selectItem itemLabel="Path Cord"
+                    itemValue="Path Cord" />
+                <f:selectItem itemLabel="Rack de Chão"
+                    itemValue="Rack de Chão" />
+                <f:selectItem itemLabel="Rack de Parede"
+                    itemValue="Rack de Parede" />
+            </p:selectOneMenu>
+            <p:outputLabel value="Quantidade" style="margin-left:30px" />
+            <p:inputText maxlength="3" size="3"
+                value="#{materialBean.quantidade}" />
+
+            <p:commandButton value="Adicionar" style="margin-left:30px"
+                action="#{materialBean.add}" update="tabela" />
+
+        </p:panelGrid>
+
+        <p:spacer />
+
+        <p:dataTable var="material"
+            value="#{materialBean.listaMaterial}"
+            style="margin-left:50px;width: 798px" id="tabela">
+
+            <p:column headerText="Item">
+                <h:outputText value="#{material.nome}" />
+            </p:column>
+            <p:column headerText="Quantidade">
+                <h:outputText value="#{material.quantidade}" />
+            </p:column>
+
+        </p:dataTable>
+    </p:panel>
+
+    <h3 style="margin-top: 20px">Observações</h3>
+    <p:editor width="900" />
+
+
+</ui:composition>
+

@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <table>
+        <tr>
+
+            <td><p:outputLabel value="Técnico"/></td>
+
+            <td><p:selectOneMenu style="width:375px" value="#{poloBean.selectTecnico}">
+                    <f:selectItem  itemLabel="select" itemValue="0dfd"/>                   
+                    <f:selectItem  itemLabel="Teste2" itemValue="2dfdf"/>                   
+                    <f:selectItem  itemLabel="Teste3" itemValue="3dfdfd"/>   
+                    <p:ajax update="id" event="change" listener="#{poloBean.stateChangeListener}"/>                
+                </p:selectOneMenu></td>
+            
+            <td><p:outputLabel value="Polo:" /></td>
+
+            <td><p:inputText value="#{poloBean.selectTecnico}"
+                    disabled="true" style="width:370px" /></td>
+        </tr>
+        <p:growl life="2000"/>
+        <tr>
+            <td><p:outputLabel value="Cidade:" /></td>
+
+            <td><p:selectOneMenu style="width:375px" value="#{comarcaBean.selectCidade}">
+                    <f:selectItem itemLabel="Selecione a cidade" itemValue="0" />
+                    <f:selectItems value="#{comarcaBean.cidades}" />
+                    <p:ajax update="id" event="change" listener="#{comarcaBean.stateChangeListenerCidade}"/>
+                </p:selectOneMenu></td>
+
+            <td><p:outputLabel value="Órgão" /></td>
+
+            <td><p:selectOneMenu style="width:375px" value="#{comarcaBean.selectOrgao}">
+                    <f:selectItem itemLabel="Selecione o local" />
+                    <f:selectItems value="#{comarcaBean.orgaos}" />
+                    <p:ajax update="id" event="change" listener="#{comarcaBean.stateChangeListenerOrgao}"/>
+                </p:selectOneMenu></td>
+        </tr>
+
+        <tr>
+            <td><p:outputLabel value="Responsável:" /></td>
+
+            <td><p:inputText value="#{poloBean.teste}"
+                    disabled="true" style="width:370px" /></td>
+            <td colspan="2">
+
+                <table>
+                    <tr>
+                        <td width="200"><p:outputLabel
+                                value="Data de Inclusão:" /></td>
+                        <td><p:outputLabel
+                                value="Data de Modificação:" /></td>
+                    </tr>
+
+                </table>
+
+
+            </td>
+        </tr>
+
+    </table>
+
+</ui:composition>

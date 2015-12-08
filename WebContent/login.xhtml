@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+    <meta http-equiv="Content-Type"
+        content="text/html; charset=ISO-8859-1" />
+
+    <link rel="stylesheet" type="text/css" href="css/layout.css"
+        media="screen" />
+
+    <title>Infosis Telecom</title>
+    <style>
+.semBorda tr,.semBorda td {
+	border: none !important;
+}
+</style>
+</h:head>
+<h:body>
+
+    <h:form id="form">
+        <p:growl styleClass="ui-growl-item-container"/>
+        <div
+            style="background: url('imagens/login.jpg') no-repeat scroll left top; height: 439px; width: 781px; margin-left: 25%; margin-top: 10%">
+            <br />
+            <h2 style="margin-left: 28%; margin-top: 22%;">Infosis
+                Telecom</h2>
+
+            <table style="margin-left: 23%; margin-top: 5%;">
+                <tr>
+                    <td class="font">Usuário:</td>
+                    <td><p:inputText required="true"
+                            requiredMessage="Usuário necessário"
+                            value="#{loginBean.login}" /></td>
+                </tr>
+                <tr>
+                    <td class="font">Senha:</td>
+                    <td><p:password required="true"
+                            requiredMessage="Senha necessária"
+                            value="#{loginBean.senha}" /></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td><p:commandButton value="Entrar"
+                            update="form"
+                            actionListener="#{loginBean.submit}"
+                            style="float:right" /></td>
+
+                </tr>
+
+            </table>
+
+
+
+        </div>
+
+
+    </h:form>
+
+</h:body>
+</html>
