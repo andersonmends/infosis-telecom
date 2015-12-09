@@ -19,6 +19,11 @@
 .semBorda tr, .semBorda td {
 	border: none !important;
 }
+
+.text {
+	font-size: 14px !important;
+}
+
 </style>
 
 </h:head>
@@ -36,7 +41,7 @@
 
 		<h:form>
 			<p:menubar autoDisplay="false"
-				class="title ui-widget-header ui-corner-all">
+				class="title ui-widget-header ui-corner-all" styleClass="text">
 				<p:submenu label="Ramal">
 					<p:menuitem value="Pesquisar" />
 
@@ -70,9 +75,9 @@
 			</p:menubar>
 		</h:form>
 
-		
-			<ui:include src="/consulta.xhtml" />
-		
+
+		<ui:include src="/consulta.xhtml" />
+
 		<h:form rendered="false">
 
 			<p:fieldset style="margin-top: 50px" legend="Polo" class="font"

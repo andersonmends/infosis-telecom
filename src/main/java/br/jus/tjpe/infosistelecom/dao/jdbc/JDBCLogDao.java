@@ -36,26 +36,12 @@ public class JDBCLogDao implements LogDao {
 				log.setID(Long.toString(rs.getLong("PK_LOG_ID")));
 				log.setData(rs.getString("LOG_DT_Data"));
 				log.setUsuario(rs.getString("LOG_NM_Usuario"));
-				log.setCategoriaDiurnaNew(rs
-						.getString("LOG_ST_CategoriaDiurnaNew"));
-				log.setCategoriaDiurnaOld(rs
-						.getString("LOG_ST_CategoriaDiurnaOld"));
-				log.setCategoriaNoturnaNew(rs
-						.getString("LOG_ST_CategoriaNoturnaNew"));
-				log.setCategoriaNoturnaOld(rs
-						.getString("LOG_ST_CategoriaNoturnaOld"));
+				log.setCategoriaNew(rs.getString("LOG_ST_CategoriaNew"));
+				log.setCategoriaOld(rs.getString("LOG_ST_CategoriaOld"));
 				log.setTipoDeRamalNew(rs.getString("LOG_ST_TipoDeRamalNew"));
 				log.setTipoDeRamalOld(rs.getString("LOG_ST_TipoDeRamalOld"));
-				log.setDivulgacaoNew(rs.getString("LOG_ST_DivulgacaoNew"));
-				log.setDivulgacaoOld(rs.getString("LOG_ST_DivulgacaoOld"));
-				log.setNomenclaturaNew(rs.getString("LOG_NM_NomenclaturaNew"));
-				log.setNomenclaturaOld(rs.getString("LOG_NM_NomenclaturaOld"));
-				log.setCompartilhadoComNew(rs
-						.getString("LOG_DS_CompartilhadoComNew"));
-				log.setCompartilhadoComOld(rs
-						.getString("LOG_DS_CompartilhadoComOld"));
-				log.setObservacoesNew(rs.getString("LOG_DS_ObservacoesNew"));
-				log.setObservacoesOld(rs.getString("LOG_DS_ObservacoesOld"));
+				log.setLocalNew(rs.getString("LOG_NM_LocalNew"));
+				log.setLocalOld(rs.getString("LOG_NM_LocalOld"));
 				log.setFoneRamal(Long.toString(rs.getLong("FK_RAMAL_LOG_Fone")));
 				logs.add(log);
 
@@ -76,26 +62,18 @@ public class JDBCLogDao implements LogDao {
 
 		try {
 			PreparedStatement prst = con
-					.prepareStatement("INSERT INTO LOG VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
+					.prepareStatement("INSERT INTO LOG VALUES (?,?,?,?,?,?,?,?,?,?) ");
 
 			prst.setNull(1, 0);
 			prst.setString(2, l.getData());
 			prst.setString(3, l.getUsuario());
-			prst.setString(4, l.getCategoriaDiurnaNew());
-			prst.setString(5, l.getCategoriaDiurnaOld());
-			prst.setString(6, l.getCategoriaNoturnaNew());
-			prst.setString(7, l.getCategoriaNoturnaOld());
-			prst.setString(8, l.getTipoDeRamalNew());
-			prst.setString(9, l.getTipoDeRamalOld());
-			prst.setString(10, l.getDivulgacaoNew());
-			prst.setString(11, l.getDivulgacaoOld());
-			prst.setString(12, l.getNomenclaturaNew());
-			prst.setString(13, l.getNomenclaturaOld());
-			prst.setString(14, l.getCompartilhadoComNew());
-			prst.setString(15, l.getCompartilhadoComOld());
-			prst.setString(16, l.getObservacoesNew());
-			prst.setString(17, l.getObservacoesOld());
-			prst.setLong(18, Long.parseLong(l.getFoneRamal()));
+			prst.setString(4, l.getCategoriaNew());
+			prst.setString(5, l.getCategoriaOld());
+			prst.setString(6, l.getTipoDeRamalNew());
+			prst.setString(7, l.getTipoDeRamalOld());			
+			prst.setString(8, l.getLocalNew());
+			prst.setString(9, l.getLocalOld());
+			prst.setLong(10, Long.parseLong(l.getFoneRamal()));
 			prst.execute();
 			prst.close();
 
@@ -125,9 +103,6 @@ public class JDBCLogDao implements LogDao {
 			String usuario) {
 		ArrayList<Log> logs = new ArrayList<Log>();
 
-		System.out.println(inicio);
-		System.out.println(fim);
-
 		try {
 			PreparedStatement prst = con
 					.prepareStatement("SELECT * FROM LOG WHERE FK_RAMAL_LOG_Fone like ? AND LOG_DT_Data BETWEEN ? AND ? AND LOG_NM_Usuario like ? ORDER BY LOG_DT_Data ASC");
@@ -144,26 +119,12 @@ public class JDBCLogDao implements LogDao {
 				log.setID(Long.toString(rs.getLong("PK_LOG_ID")));
 				log.setData(rs.getString("LOG_DT_Data"));
 				log.setUsuario(rs.getString("LOG_NM_Usuario"));
-				log.setCategoriaDiurnaNew(rs
-						.getString("LOG_ST_CategoriaDiurnaNew"));
-				log.setCategoriaDiurnaOld(rs
-						.getString("LOG_ST_CategoriaDiurnaOld"));
-				log.setCategoriaNoturnaNew(rs
-						.getString("LOG_ST_CategoriaNoturnaNew"));
-				log.setCategoriaNoturnaOld(rs
-						.getString("LOG_ST_CategoriaNoturnaOld"));
+				log.setCategoriaNew(rs.getString("LOG_ST_CategoriaNew"));
+				log.setCategoriaOld(rs.getString("LOG_ST_CategoriaOld"));
 				log.setTipoDeRamalNew(rs.getString("LOG_ST_TipoDeRamalNew"));
 				log.setTipoDeRamalOld(rs.getString("LOG_ST_TipoDeRamalOld"));
-				log.setDivulgacaoNew(rs.getString("LOG_ST_DivulgacaoNew"));
-				log.setDivulgacaoOld(rs.getString("LOG_ST_DivulgacaoOld"));
-				log.setNomenclaturaNew(rs.getString("LOG_NM_NomenclaturaNew"));
-				log.setNomenclaturaOld(rs.getString("LOG_NM_NomenclaturaOld"));
-				log.setCompartilhadoComNew(rs
-						.getString("LOG_DS_CompartilhadoComNew"));
-				log.setCompartilhadoComOld(rs
-						.getString("LOG_DS_CompartilhadoComOld"));
-				log.setObservacoesNew(rs.getString("LOG_DS_ObservacoesNew"));
-				log.setObservacoesOld(rs.getString("LOG_DS_ObservacoesOld"));
+				log.setLocalNew(rs.getString("LOG_NM_LocalNew"));
+				log.setLocalOld(rs.getString("LOG_NM_LocalOld"));
 				log.setFoneRamal(Long.toString(rs.getLong("FK_RAMAL_LOG_Fone")));
 				logs.add(log);
 				// System.out.println(log.getData());

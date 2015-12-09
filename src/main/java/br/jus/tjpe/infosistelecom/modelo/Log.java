@@ -6,51 +6,44 @@ public class Log {
 	private String foneRamal;
 	private String data;
 	private String usuario;
-	private String categoriaDiurnaNew;
-	private String categoriaDiurnaOld;
-	private String categoriaNoturnaNew;
-	private String categoriaNoturnaOld;
+	private String categoriaNew;
+	private String categoriaOld;
 	private String tipoDeRamalNew;
 	private String tipoDeRamalOld;
-	private String divulgacaoNew;
-	private String divulgacaoOld;
-	private String nomenclaturaNew;
-	private String nomenclaturaOld;
-	private String compartilhadoComNew;
-	private String compartilhadoComOld;
-	private String observacoesNew;
-	private String observacoesOld;
+	private String LocalNew;
+	private String LocalOld;
+
+	public String getLocalNew() {
+		return LocalNew;
+	}
+
+	public void setLocalNew(String LocalNew) {
+		this.LocalNew = LocalNew;
+	}
+
+	public String getLocalOld() {
+		return LocalOld;
+	}
 	
-	public String getNomenclaturaNew() {
-		return nomenclaturaNew;
+	public void setLocalOld(String LocalOld) {
+		this.LocalOld = LocalOld;
 	}
 
-	public void setNomenclaturaNew(String nomenclaturaNew) {
-		this.nomenclaturaNew = nomenclaturaNew;
+	public String getCategoriaNew() {
+		return categoriaNew;
 	}
 
-	public String getNomenclaturaOld() {
-		return nomenclaturaOld;
+	public void setCategoriaNew(String categoriaNew) {
+		this.categoriaNew = categoriaNew;
 	}
 
-
-	public String getCategoriaDiurnaNew() {
-		return categoriaDiurnaNew;
+	public String getCategoriaOld() {
+		return categoriaOld;
 	}
 
-	public void setCategoriaDiurnaNew(String categoriaNew) {
-		this.categoriaDiurnaNew = categoriaNew;
+	public void setCategoriaOld(String categoriaOld) {
+		this.categoriaOld = categoriaOld;
 	}
-
-	public String getCategoriaDiurnaOld() {
-		return categoriaDiurnaOld;
-	}
-
-	public void setCategoriaDiurnaOld(String categoriaOld) {
-		this.categoriaDiurnaOld = categoriaOld;
-	}
-
-	
 
 	public String getTipoDeRamalNew() {
 		return tipoDeRamalNew;
@@ -66,59 +59,6 @@ public class Log {
 
 	public void setTipoDeRamalOld(String tipoDeRamalOld) {
 		this.tipoDeRamalOld = tipoDeRamalOld;
-	}
-
-	public void setNomenclaturaOld(String nomenclaturaOld) {
-		this.nomenclaturaOld = nomenclaturaOld;
-	}
-
-	public String getDivulgacaoNew() {
-		return divulgacaoNew;
-	}
-
-	public void setDivulgacaoNew(String divulgaçãoNew) {
-		this.divulgacaoNew = divulgaçãoNew;
-	}
-
-	public String getDivulgacaoOld() {
-		return divulgacaoOld;
-	}
-
-	public void setDivulgacaoOld(String divulgaçãoOld) {
-		this.divulgacaoOld = divulgaçãoOld;
-	}
-
-	
-	public String getCompartilhadoComNew() {
-		return compartilhadoComNew;
-	}
-
-	public void setCompartilhadoComNew(String compartilhadoComNew) {
-		this.compartilhadoComNew = compartilhadoComNew;
-	}
-
-	public String getCompartilhadoComOld() {
-		return compartilhadoComOld;
-	}
-
-	public void setCompartilhadoComOld(String compartilhadoComOld) {
-		this.compartilhadoComOld = compartilhadoComOld;
-	}
-
-	public String getObservacoesNew() {
-		return observacoesNew;
-	}
-
-	public void setObservacoesNew(String observacoesNew) {
-		this.observacoesNew = observacoesNew;
-	}
-
-	public String getObservacoesOld() {
-		return observacoesOld;
-	}
-
-	public void setObservacoesOld(String observacoesOld) {
-		this.observacoesOld = observacoesOld;
 	}
 
 	public String getID() {
@@ -151,22 +91,6 @@ public class Log {
 
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
-	}
-	
-	public String getCategoriaNoturnaNew() {
-		return categoriaNoturnaNew;
-	}
-
-	public void setCategoriaNoturnaNew(String categoriaNoturnaNew) {
-		this.categoriaNoturnaNew = categoriaNoturnaNew;
-	}
-
-	public String getCategoriaNoturnaOld() {
-		return categoriaNoturnaOld;
-	}
-
-	public void setCategoriaNoturnaOld(String categoriaNoturnaOld) {
-		this.categoriaNoturnaOld = categoriaNoturnaOld;
 	}
 
 }

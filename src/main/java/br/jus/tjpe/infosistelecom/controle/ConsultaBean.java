@@ -92,15 +92,10 @@ public class ConsultaBean {
 		RamalDao daoRamal = RamalDaoFactory.createRamalDao();
 		daoRamal.atualizar(selectRamal);
 
-		log.setCategoriaDiurnaNew(selectRamal.getCategoriaDiurna());
-		log.setCategoriaNoturnaNew(selectRamal.getCategoriaNoturna());
+		log.setCategoriaNew(selectRamal.getCategoria());
 		log.setTipoDeRamalNew(selectRamal.getTipoDeRamal());
-		log.setDivulgacaoNew(selectRamal.getDivulgacao());
-		log.setNomenclaturaNew(selectRamal.getNomenclatura());
-		log.setCompartilhadoComNew(selectRamal.getCompartilhadoCom());
-		log.setObservacoesNew(selectRamal.getObservacoes());
+		log.setLocalNew(selectRamal.getLocal());
 		
-
 		LogDao daoLog = LogDaoFactory.createLogDaoFactory();
 		daoLog.adicionar(log);
 		this.init();
@@ -120,12 +115,7 @@ public class ConsultaBean {
 
 		
 		RamalDao daoRamal = RamalDaoFactory.createRamalDao();
-		
 		daoRamal.remover(ramalTemp);
-		
-		System.out.println(ramalTemp.getCategoriaDiurna());
-		System.out.println(ramalTemp.getCircuito());
-		System.out.println(ramalTemp.getFone());
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage("Ramal Removido"));
 		// ramalTemp = new Ramal();
@@ -166,14 +156,9 @@ public class ConsultaBean {
 		log.setFoneRamal(ramalTemp.getFone());
 		log.setData(dataFormatada);
 		log.setUsuario("");
-		log.setCategoriaDiurnaOld(ramalTemp.getCategoriaDiurna());
-		log.setCategoriaNoturnaOld(ramalTemp.getCategoriaNoturna());
+		log.setCategoriaOld(ramalTemp.getCategoria());
 		log.setTipoDeRamalOld(ramalTemp.getTipoDeRamal());
-		log.setDivulgacaoOld(ramalTemp.getDivulgacao());
-		log.setCompartilhadoComOld(ramalTemp.getCompartilhadoCom());
-		log.setObservacoesOld(ramalTemp.getObservacoes());
-		
-
+		log.setLocalOld(ramalTemp.getLocal());
 	}
 
 }

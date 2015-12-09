@@ -93,7 +93,7 @@ public class OrgaoBean {
 
 		for (Orgao orgao : orgaos) {
 			if (selectCidade.equals(orgao.getCidade())) {
-				orgaosTemp.add(orgao.getLocalidade());
+				orgaosTemp.add(orgao.getUnidade());
 			}
 		}
 
@@ -122,7 +122,7 @@ public class OrgaoBean {
 		for (Orgao comarca : orgaos) {
 
 			if (comarca.getCidade().equals(selectCidade)
-					&& comarca.getLocalidade().equals(selectOrgao)) {
+					&& comarca.getUnidade().equals(selectOrgao)) {
 			
 				session.setAttribute("comarca", comarca);
 				

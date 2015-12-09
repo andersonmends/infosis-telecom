@@ -35,10 +35,8 @@ public class JDBCRamalDao implements RamalDao {
 
 				// recuperação da tabela órgão
 				o.setCentroDeCusto(rs.getString("FK_ORGAO_RAMAL_CentroDeCusto"));
-				o.setLocalidade(rs.getString("ORGAO_NM_Localidade"));
-				o.setSuborgao(rs.getString("ORGAO_NM_Suborgao"));
-				o.setCentroDeCustoAntigo(Long.toString(rs
-						.getLong("ORGAO_ID_CentroDeCustoAntigo")));
+				o.setUnidade(rs.getString("ORGAO_NM_Unidade"));
+				o.setPredio(rs.getString("ORGAO_NM_Predio"));
 				o.setPolo(rs.getString("ORGAO_NM_Polo"));
 				o.setCidade(rs.getString("ORGAO_NM_Cidade"));
 				o.setEndereco(rs.getString("ORGAO_NM_Endereco"));
@@ -48,15 +46,14 @@ public class JDBCRamalDao implements RamalDao {
 				r.setFone(Long.toString(rs.getLong("PK_RAMAL_Fone")));
 				r.setCircuito(rs.getString("RAMAL_ID_Circuito"));
 				r.setSituacao(rs.getString("RAMAL_ST_Situacao"));
-				r.setCategoriaDiurna(rs.getString("RAMAL_ST_CategoriaDiurna"));
-				r.setCategoriaNoturna(rs.getString("RAMAL_ST_CategoriaNoturna"));
+				r.setCategoria(rs.getString("RAMAL_ST_Categoria"));
 				r.setTipoDeRamal(rs.getString("RAMAL_ST_TipoDeRamal"));
 				r.setOrgao(o);
-				r.setDivulgacao(rs.getString("RAMAL_ST_Divulgacao"));
-				r.setNomenclatura(rs.getString("RAMAL_NM_Nomenclatura"));
-				r.setDataDeAtivacao(rs.getString("RAMAL_DT_DataDeAtivacao"));
-				r.setCompartilhadoCom(rs.getString("RAMAL_DS_CompartilhadoCom"));
-				r.setObservacoes(rs.getString("RAMAL_DS_Observacoes"));
+				r.setUnidade(rs.getString("RAMAL_NM_Unidade"));
+				r.setUnidade(rs.getString("RAMAL_NM_Local"));
+				
+//				r.setDataDeAtivacao(rs.getString("RAMAL_DT_DataDeAtivacao"));
+//				r.setObservacoes(rs.getString("RAMAL_DS_Observacoes"));
 				r.setCentroDeCusto(rs.getString("FK_ORGAO_RAMAL_CentroDeCusto"));
 
 				ramais.add(r);
@@ -73,23 +70,18 @@ public class JDBCRamalDao implements RamalDao {
 
 		try {
 			PreparedStatement prst = con
-					.prepareStatement("INSERT INTO RAMAL VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) ");
-
-			System.out.println(r.getDivulgacao());
+					.prepareStatement("INSERT INTO RAMAL VALUES (?,?,?,?,?,?,?,?) ");
 			
 			prst.setLong(1, Long.parseLong(r.getFone()));
 			prst.setString(2, r.getCircuito());
 			prst.setString(3, r.getSituacao());
-			prst.setString(4, r.getCategoriaDiurna());
-			prst.setString(5, r.getCategoriaNoturna());
-			prst.setString(6, r.getTipoDeRamal());
-			prst.setString(7, r.getDivulgacao());
-			prst.setString(8, r.getOrgao().getLocalidade());
-			prst.setString(9, r.getNomenclatura());
-			prst.setString(10, r.getDataDeAtivacao());
-			prst.setString(11, r.getCompartilhadoCom());
-			prst.setString(12, r.getObservacoes());
-			prst.setString(13,r.getOrgao().getCentroDeCusto());
+			prst.setString(4, r.getCategoria());
+			prst.setString(5, r.getTipoDeRamal());
+			prst.setString(6, r.getOrgao().getUnidade());
+			prst.setString(7, r.getLocal());
+//			prst.setString(10, r.getDataDeAtivacao());
+//			prst.setString(12, r.getObservacoes());
+			prst.setString(8,r.getOrgao().getCentroDeCusto());
 			prst.execute();
 			prst.close();
 
@@ -129,30 +121,24 @@ public class JDBCRamalDao implements RamalDao {
 			PreparedStatement prst = con.prepareStatement("update RAMAL set "
 					+ "RAMAL_ID_Circuito = ? , " 
 					+ "RAMAL_ST_Situacao = ? , "
-					+ "RAMAL_ST_CategoriaDiurna = ? , "
-					+ "RAMAL_ST_CategoriaNoturna = ? , "
+					+ "RAMAL_ST_Categoria = ? , "
 					+ "RAMAL_ST_TipoDeRamal = ?, "
-					+ "RAMAL_ST_Divulgacao = ?, " 
-					+ "RAMAL_NM_Localidade = ?, "
-					+ "RAMAL_NM_Nomenclatura = ?, "
-					+ "RAMAL_DT_DataDeAtivacao = ?, "
-					+ "RAMAL_DS_CompartilhadoCom = ?, "
-					+ "RAMAL_DS_Observacoes = ?, "
+					+ "RAMAL_NM_Unidade = ?, "
+					+ "RAMAL_NM_Local = ?, "
+//					+ "RAMAL_DT_DataDeAtivacao = ?, "
+//					+ "RAMAL_DS_Observacoes = ?, "
 					+ "FK_ORGAO_RAMAL_CentroDeCusto = ? "
 					+ "where PK_RAMAL_Fone = ?");
 			prst.setString(1, r.getCircuito());
 			prst.setString(2, r.getSituacao());
-			prst.setString(3, r.getCategoriaDiurna());
-			prst.setString(4, r.getCategoriaNoturna());
-			prst.setString(5, r.getTipoDeRamal());
-			prst.setString(6, r.getDivulgacao());
-			prst.setString(7, r.getOrgao().getLocalidade());
-			prst.setString(8, r.getNomenclatura());
-			prst.setString(9, r.getDataDeAtivacao());
-			prst.setString(10, r.getCompartilhadoCom());
-			prst.setString(11, r.getObservacoes());
-			prst.setString(12, r.getOrgao().getCentroDeCusto());
-			prst.setLong(13, Long.parseLong(r.getFone()));
+			prst.setString(3, r.getCategoria());
+			prst.setString(4, r.getTipoDeRamal());
+			prst.setString(5, r.getOrgao().getUnidade());
+			prst.setString(6, r.getLocal());
+//			prst.setString(9, r.getDataDeAtivacao());
+//			prst.setString(11, r.getObservacoes());
+			prst.setString(7, r.getOrgao().getCentroDeCusto());
+			prst.setLong(8, Long.parseLong(r.getFone()));
 			prst.executeUpdate();
 			prst.close();
 

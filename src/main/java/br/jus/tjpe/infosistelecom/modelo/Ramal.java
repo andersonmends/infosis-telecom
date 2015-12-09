@@ -5,15 +5,13 @@ public class Ramal {
 	private String fone;
 	private String circuito;
 	private String situacao;
-	private String categoriaDiurna;
-	private String categoriaNoturna;
+	private String categoria;
 	private String tipoDeRamal;
 	private Orgao orgao;
-	private String divulgacao;
-	private String nomenclatura;
-	private String dataDeAtivacao;
-	private String compartilhadoCom;
-	private String observacoes;
+	private String unidade;
+	private String local;
+	// private String dataDeAtivacao;
+	// private String observacoes;
 	private String centroDeCusto;
 
 	public Ramal() {
@@ -21,15 +19,13 @@ public class Ramal {
 		this.fone = "";
 		this.circuito = "";
 		this.situacao = "";
-		this.categoriaDiurna = "";
-		this.categoriaNoturna = "";
+		this.categoria = "";
 		this.tipoDeRamal = "";
 		this.orgao = new Orgao();
-		this.divulgacao = "";
-		this.nomenclatura = "";
-		this.dataDeAtivacao = "";
-		this.compartilhadoCom = "";
-		this.observacoes = "";
+		this.unidade = "";
+		this.local = "";
+		// this.dataDeAtivacao = "";
+		// this.observacoes = "";
 		this.centroDeCusto = "";
 
 	}
@@ -42,20 +38,12 @@ public class Ramal {
 		this.situacao = situacao;
 	}
 
-	public String getCategoriaNoturna() {
-		return categoriaNoturna;
+	public String getUnidade() {
+		return unidade;
 	}
 
-	public void setCategoriaNoturna(String categoriaNoturna) {
-		this.categoriaNoturna = categoriaNoturna;
-	}
-
-	public String getNomenclatura() {
-		return nomenclatura;
-	}
-
-	public void setNomenclatura(String nomeclatura) {
-		this.nomenclatura = nomeclatura;
+	public void setUnidade(String unidade) {
+		this.unidade = unidade;
 	}
 
 	public String getTipoDeRamal() {
@@ -66,31 +54,22 @@ public class Ramal {
 		this.tipoDeRamal = tipoDeRamal;
 	}
 
-	public String getDataDeAtivacao() {
-		return dataDeAtivacao;
-	}
+	// public String getDataDeAtivacao() {
+	// return dataDeAtivacao;
+	// }
+	//
+	// public void setDataDeAtivacao(String dataDeAtivacao) {
+	// this.dataDeAtivacao = dataDeAtivacao;
+	// }
 
-	public void setDataDeAtivacao(String dataDeAtivacao) {
-		this.dataDeAtivacao = dataDeAtivacao;
-	}
+	// public String getObservacoes() {
+	// return observacoes;
+	// }
+	//
+	// public void setObservacoes(String observacoes) {
+	// this.observacoes = observacoes;
+	// }
 
-	public String getCompartilhadoCom() {
-		return compartilhadoCom;
-	}
-
-	public void setCompartilhadoCom(String compartilhadoCom) {
-		this.compartilhadoCom = compartilhadoCom;
-	}
-
-	public String getObservacoes() {
-		return observacoes;
-	}
-
-	public void setObservacoes(String observacoes) {
-		this.observacoes = observacoes;
-	}
-
-	
 	public String getCircuito() {
 		return circuito;
 	}
@@ -99,20 +78,12 @@ public class Ramal {
 		this.circuito = circuito;
 	}
 
-	public String getDivulgacao() {
-		return divulgacao;
+	public String getCategoria() {
+		return categoria;
 	}
 
-	public void setDivulgacao(String divulgacao) {
-		this.divulgacao = divulgacao;
-	}
-
-	public String getCategoriaDiurna() {
-		return categoriaDiurna;
-	}
-
-	public void setCategoriaDiurna(String categoria) {
-		this.categoriaDiurna = categoria;
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 	public Orgao getOrgao() {
@@ -139,5 +110,12 @@ public class Ramal {
 		this.fone = numero;
 	}
 
+	public String getLocal() {
+		return local;
+	}
+
+	public void setLocal(String local) {
+		this.local = local;
+	}
 
 }

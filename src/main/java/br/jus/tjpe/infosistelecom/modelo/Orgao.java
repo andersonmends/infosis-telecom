@@ -4,9 +4,8 @@ package br.jus.tjpe.infosistelecom.modelo;
 public class Orgao {
 	
 	private String centroDeCusto;
-	private String localidade;
-	private String suborgao;
-	private String centroDeCustoAntigo;
+	private String unidade;
+	private String predio;
 	private String polo;
 	private String cidade;
 	private String endereco;
@@ -15,9 +14,8 @@ public class Orgao {
 	public Orgao(){
 		
 		this.centroDeCusto = "";
-		this.centroDeCustoAntigo = "";
-		this.localidade = "";
-		this.suborgao = "";
+		this.unidade = "";
+		this.predio = "";
 		this.cidade = "";
 		this.polo = "";	
 		this.endereco = "";
@@ -31,23 +29,17 @@ public class Orgao {
 	public void setCentroDeCusto(String centroDeCustoOrgao) {
 		this.centroDeCusto = centroDeCustoOrgao;
 	}
-	public String getCentroDeCustoAntigo() {
-		return centroDeCustoAntigo;
+	public String getUnidade() {
+		return unidade;
 	}
-	public void setCentroDeCustoAntigo(String centroDeCustoOrgaoSuperior) {
-		this.centroDeCustoAntigo = centroDeCustoOrgaoSuperior;
+	public void setUnidade(String unidade) {
+		this.unidade = unidade;
 	}
-	public String getLocalidade() {
-		return localidade;
+	public String getPredio() {
+		return predio;
 	}
-	public void setLocalidade(String nome) {
-		this.localidade = nome;
-	}
-	public String getSuborgao() {
-		return suborgao;
-	}
-	public void setSuborgao(String Suborgao) {
-		this.suborgao = Suborgao;
+	public void setPredio(String predio) {
+		this.predio = predio;
 	}
 	public String getCidade() {
 		return cidade;

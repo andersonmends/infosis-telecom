@@ -26,7 +26,7 @@ public class JDBCOrgaoDao implements OrgaoDao {
 
 		try {
 			PreparedStatement prst = con
-					.prepareStatement("select * from ORGAO order by ORGAO_NM_Cidade asc, ORGAO_NM_Localidade asc");
+					.prepareStatement("select * from ORGAO order by ORGAO_NM_Cidade asc, ORGAO_NM_Unidade asc");
 
 			ResultSet rs = prst.executeQuery();
 
@@ -34,14 +34,10 @@ public class JDBCOrgaoDao implements OrgaoDao {
 
 				Orgao orgao = new Orgao();
 				orgao.setCentroDeCusto(rs.getString(("PK_ORGAO_CentroDeCusto")));
-				orgao.setLocalidade(rs.getString("ORGAO_NM_Localidade"));
-				orgao.setSuborgao(rs
-						.getString("ORGAO_NM_Suborgao"));
-				orgao.setCentroDeCustoAntigo(Long.toString(rs
-						.getLong("ORGAO_ID_CentroDeCustoAntigo")));
+				orgao.setUnidade(rs.getString("ORGAO_NM_Unidade"));
+				orgao.setPredio(rs.getString("ORGAO_NM_Predio"));
 				orgao.setCidade(rs.getString("ORGAO_NM_Cidade"));
-				orgao.setEndereco(rs.getString("ORGAO_NM_Endereco"));		
-				System.out.println(orgao);
+				orgao.setEndereco(rs.getString("ORGAO_NM_Endereco"));
 				orgaos.add(orgao);
 
 			}
@@ -59,16 +55,14 @@ public class JDBCOrgaoDao implements OrgaoDao {
 	public void adicionar(Orgao c) {
 
 		try {
-			PreparedStatement prst = con
-					.prepareStatement("INSERT INTO ORGAO VALUES (?,?,?,?,?,?,?) ");
+			PreparedStatement prst = con.prepareStatement("INSERT INTO ORGAO VALUES (?,?,?,?,?,?) ");
 
 			prst.setString(1, c.getCentroDeCusto());
-			prst.setString(2, c.getLocalidade());
-			prst.setString(3, c.getSuborgao());
-			prst.setString(4, c.getCentroDeCustoAntigo());
-			prst.setString(5, c.getPolo());
-			prst.setString(6, c.getCidade());
-			prst.setString(7, c.getEndereco());
+			prst.setString(2, c.getUnidade());
+			prst.setString(3, c.getPredio());
+			prst.setString(4, c.getPolo());
+			prst.setString(5, c.getCidade());
+			prst.setString(6, c.getEndereco());
 			prst.execute();
 			prst.close();
 
@@ -97,22 +91,17 @@ public class JDBCOrgaoDao implements OrgaoDao {
 	public Orgao buscar(String c) {
 		Orgao orgao = new Orgao();
 		try {
-			PreparedStatement prst = con
-					.prepareStatement("SELECT * FROM ORGAO WHERE ORGAO_NM_Localidade = ?");
+			PreparedStatement prst = con.prepareStatement("SELECT * FROM ORGAO WHERE ORGAO_NM_Unidade = ?");
 			prst.setString(1, c);
 			ResultSet rs = prst.executeQuery();
 
 			while (rs.next()) {
 
 				orgao.setCentroDeCusto(rs.getString(("PK_ORGAO_CentroDeCusto")));
-				orgao.setLocalidade(rs.getString("ORGAO_NM_Localidade"));
-				orgao.setSuborgao(rs
-						.getString("ORGAO_NM_SubOrgao"));
-				orgao.setCentroDeCustoAntigo(Long.toString(rs
-						.getLong("ORGAO_ID_CentroDeCustoAntigo")));
+				orgao.setUnidade(rs.getString("ORGAO_NM_Unidade"));
+				orgao.setPredio(rs.getString("ORGAO_NM_Predio"));
 				orgao.setCidade(rs.getString("ORGAO_NM_Cidade"));
 				orgao.setEndereco(rs.getString("ORGAO_NM_Endereco"));
-
 
 			}
 
