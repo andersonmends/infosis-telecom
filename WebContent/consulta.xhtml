@@ -11,17 +11,19 @@
 .semBorda tr, .semBorda td {
 	border: none !important;
 	background: none !important;
+	font-size: 12px !important;
 }
 
 .larguraPanelGrid {
-	width: 150px
+	width: 150px font-size: 12px !important;
 }
 
 .larguraInput {
-	width: 470px
+	width: 470px;
+	font-size: 12px !important;
 }
 
-.ui-datatable, .ui-inputText {
+.ui-datatable {
 	font-size: 12px !important;
 }
 </style>
@@ -40,22 +42,24 @@
 		value="#{consultaBean.ramais}" paginator="true" rows="25"
 		selectionMode="single" selection="#{consultaBean.selectRamal}"
 		rowKey="#{ramal.fone}" onRowSelectComplete="dlgEdit.show()"
-		paginatorPosition="bottom" paginatorAlwaysVisible="true"
-		loadingMessage="Buscando..." pageLinks="5">
+		paginatorPosition="bottom" paginatorAlwaysVisible="true" pageLinks="5"
+		filteredValue="#{consultaBean.ramaisFilter}" scrollable="true"
+		loadingMessage="Buscando...">
 
-		<p:ajax event="rowSelect" update=":formPrincipal"
+		<p:ajax event="rowDblselect" update=":formPrincipal"
 			oncomplete="dlgEdit.show()" listener="#{consultaBean.onRowSelect}" />
 
 
-		<p:column filterBy="#{ramal.fone}" sortBy="#{ramal.fone} " width="100"
-			headerText="Ramal">
+		<p:column filterBy="#{ramal.fone}" sortBy="#{ramal.fone} " width="80"
+			headerText="Ramal" filterMatchMode="contains">
 
 			<h:outputText value="#{ramal.fone}" />
 		</p:column>
 
 
 		<p:column filterBy="#{ramal.orgao.cidade}"
-			sortBy="#{ramal.orgao.cidade}" width="100" headerText="Cidade">
+			sortBy="#{ramal.orgao.cidade}" width="100" headerText="Cidade"
+			filterMatchMode="contains">
 
 
 			<h:outputText value="#{ramal.orgao.cidade}" />
@@ -74,17 +78,16 @@
 		<!-- 				</p:column> -->
 
 
-		<p:column filterBy="#{ramal.orgao.localidade}"
-			sortBy="#{ramal.orgao.localidade}" width="400" headerText="Unidade">
+		<p:column filterBy="#{ramal.orgao.unidade}"
+			sortBy="#{ramal.orgao.unidade}" width="400" headerText="Unidade"
+			filterMatchMode="contains">
 
-			<h:outputText value="#{ramal.orgao.localidade}" />
+			<h:outputText value="#{ramal.orgao.unidade}" />
 		</p:column>
 
-		<p:column width="100" headerText="Local"
-			sortBy="#{ramal.nomenclatura}" filterBy="#{ramal.nomenclatura}">
-
-
-			<h:outputText value="#{ramal.nomenclatura}" />
+		<p:column width="200" headerText="Local" sortBy="#{ramal.local}"
+			filterBy="#{ramal.local}" filterMatchMode="contains">
+			<h:outputText value="#{ramal.local}" />
 
 		</p:column>
 
@@ -163,8 +166,10 @@ ________________________________________________________________________________
 __________________________________________________________________________________________________________________
 -->
 
-	<p:dialog widgetVar="dlgEdit" id="dlgEdit" header="Editar" height="750"
-		width="740" modal="true" resizable="false">
+
+
+	<p:dialog widgetVar="dlgEdit" id="dlgEdit" header="Editar" height="450"
+		width="700" modal="true" resizable="false">
 
 		<p:panelGrid id="pgridEdit" columns="2" styleClass="semBorda">
 
@@ -172,11 +177,6 @@ ________________________________________________________________________________
 			<p:inputText value="#{consultaBean.selectRamal.orgao.centroDeCusto}"
 				styleClass="larguraInput" readonly="true" />
 
-
-			<h:outputText value="Centro de Custo Antigo" />
-			<p:inputText
-				value="#{consultaBean.selectRamal.orgao.centroDeCustoAntigo}"
-				styleClass="larguraInput" readonly="true" />
 
 			<h:outputText value="Cidade" />
 			<p:inputText value="#{consultaBean.selectRamal.orgao.cidade}"
@@ -188,7 +188,7 @@ ________________________________________________________________________________
 				styleClass="larguraInput" readonly="true" />
 
 			<h:outputText value="Unidade" />
-			<p:inputText value="#{consultaBean.selectRamal.orgao.localidade}"
+			<p:inputText value="#{consultaBean.selectRamal.orgao.unidade}"
 				styleClass="larguraInput" readonly="true" />
 
 
@@ -200,56 +200,39 @@ ________________________________________________________________________________
 			<p:inputText value="#{consultaBean.selectRamal.fone}"
 				styleClass="larguraInput" readonly="true" />
 
-			<h:outputText value="Data de Ativação" />
-			<p:inputText value="#{consultaBean.selectRamal.dataDeAtivacao}"
-				styleClass="larguraInput" readonly="true" />
 
 			<h:outputText value="Situação" />
 			<p:inputText value="#{consultaBean.selectRamal.situacao}"
-				styleClass="larguraInput" readonly="true" style="width: 470px"/>
-			
+				styleClass="larguraInput" readonly="true" style="width: 470px" />
+
 
 			<h:outputText value="Circuito" />
 			<p:inputText value="#{consultaBean.selectRamal.circuito}"
 				styleClass="larguraInput" readonly="true" />
 
-			<h:outputText value="Categoria Diurna" />
-			<p:inputText value="#{consultaBean.selectRamal.categoriaDiurna}"
+			<h:outputText value="Categoria" />
+			<p:inputText value="#{consultaBean.selectRamal.categoria}"
 				styleClass="larguraInput" readonly="true" />
-			
-
-			<h:outputText value="Categoria Noturna" />
-			<p:inputText value="#{consultaBean.selectRamal.categoriaNoturna}"
-				styleClass="larguraInput" readonly="true" />
-			
 
 			<h:outputText value="Tipo do Ramal" />
 			<p:inputText value="#{consultaBean.selectRamal.tipoDeRamal}"
 				styleClass="larguraInput" readonly="true" />
-			
+
 
 			<h:outputText value="Local" />
-			<p:inputText value="#{consultaBean.selectRamal.nomenclatura}"
+			<p:inputText value="#{consultaBean.selectRamal.local}"
 				styleClass="larguraInput" readonly="true" />
 
-			<h:outputText value="Compartilhado com" />
-			<p:inputText value="#{consultaBean.selectRamal.compartilhadoCom}"
-				styleClass="larguraInput" readonly="true" />
-
-			<h:outputText value="Tipo de Divulgação" />
-			<p:inputText value="#{consultaBean.selectRamal.divulgacao}"
-				styleClass="larguraInput" readonly="true" />
-			
 			<h:outputText value="Observações" />
-			<p:inputTextarea value="#{consultaBean.selectRamal.observacoes}"
-				styleClass="larguraInput" readonly="true" />
+			<p:inputText value="#{consultaBean.selectRamal.observacoes}"
+				styleClass="larguraInput" readonly="false" />
 
 		</p:panelGrid>
 		<br />
 
 		<!-- Botões desabilitados -->
-		<p:panelGrid columns="3" style="margin-left:300px"
-			styleClass="semBorda" rendered="false">
+		<p:panelGrid columns="3" style="margin-left:310px"
+			styleClass="semBorda" rendered="true">
 
 			<p:commandButton value="Cancelar"
 				actionListener="#{consultaBean.cancelar()}" ajax="true"
@@ -258,7 +241,7 @@ ________________________________________________________________________________
 			<p:commandButton value="Remover"
 				actionListener="#{consultaBean.remover()}" ajax="true"
 				update="ramaisTabela" onclick="dlgEdit.hide()"
-				style="margin-left:30px" />
+				 />
 
 			<p:commandButton value="Confimar"
 				actionListener="#{consultaBean.atualizar}" update="ramaisTabela"
@@ -267,6 +250,7 @@ ________________________________________________________________________________
 		<!-- Botões desabilitados -->
 
 	</p:dialog>
+
 
 
 	<!-- 

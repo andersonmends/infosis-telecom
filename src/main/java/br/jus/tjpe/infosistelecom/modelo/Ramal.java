@@ -11,7 +11,7 @@ public class Ramal {
 	private String unidade;
 	private String local;
 	// private String dataDeAtivacao;
-	// private String observacoes;
+	 private String observacoes;
 	private String centroDeCusto;
 
 	public Ramal() {
@@ -25,7 +25,7 @@ public class Ramal {
 		this.unidade = "";
 		this.local = "";
 		// this.dataDeAtivacao = "";
-		// this.observacoes = "";
+		 this.observacoes = "";
 		this.centroDeCusto = "";
 
 	}
@@ -62,13 +62,13 @@ public class Ramal {
 	// this.dataDeAtivacao = dataDeAtivacao;
 	// }
 
-	// public String getObservacoes() {
-	// return observacoes;
-	// }
-	//
-	// public void setObservacoes(String observacoes) {
-	// this.observacoes = observacoes;
-	// }
+	 public String getObservacoes() {
+	 return observacoes;
+	 }
+	
+	 public void setObservacoes(String observacoes) {
+	 this.observacoes = observacoes;
+	 }
 
 	public String getCircuito() {
 		return circuito;

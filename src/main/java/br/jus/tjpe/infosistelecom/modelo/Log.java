@@ -10,23 +10,42 @@ public class Log {
 	private String categoriaOld;
 	private String tipoDeRamalNew;
 	private String tipoDeRamalOld;
-	private String LocalNew;
-	private String LocalOld;
+	private String localNew;
+	private String localOld;
+	private String observacoesNew;
+	private String observacoesOld;
+	
 
-	public String getLocalNew() {
-		return LocalNew;
+	public String getObservacoesNew() {
+		return observacoesNew;
 	}
 
-	public void setLocalNew(String LocalNew) {
-		this.LocalNew = LocalNew;
+	public void setObservacoesNew(String observacoesNew) {
+		this.observacoesNew = observacoesNew;
+	}
+
+	public String getObservacoesOld() {
+		return observacoesOld;
+	}
+
+	public void setObservacoesOld(String observacoesOld) {
+		this.observacoesOld = observacoesOld;
+	}
+
+	public String getLocalNew() {
+		return localNew;
+	}
+
+	public void setLocalNew(String localNew) {
+		this.localNew = localNew;
 	}
 
 	public String getLocalOld() {
-		return LocalOld;
+		return localOld;
 	}
 	
-	public void setLocalOld(String LocalOld) {
-		this.LocalOld = LocalOld;
+	public void setLocalOld(String localOld) {
+		this.localOld = localOld;
 	}
 
 	public String getCategoriaNew() {

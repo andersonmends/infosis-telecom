@@ -1,6 +1,5 @@
 package br.jus.tjpe.infosistelecom.controle;
 
-
 import br.jus.tjpe.infosistelecom.dao.LogDao;
 import br.jus.tjpe.infosistelecom.dao.RamalDao;
 import br.jus.tjpe.infosistelecom.factory.LogDaoFactory;
@@ -12,12 +11,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
@@ -27,9 +29,26 @@ import org.primefaces.event.SelectEvent;
 public class ConsultaBean {
 
 	private ArrayList<Ramal> ramais = new ArrayList<Ramal>();
+	private List<Ramal> ramaisFilter;
 	private Ramal selectRamal = new Ramal();
 	private Ramal ramalTemp = new Ramal();
 	private Log log = new Log();
+
+	public List<Ramal> getRamaisFilter() {
+		return ramaisFilter;
+	}
+
+	public void setRamaisFilter(List<Ramal> ramaisFilter) {
+		this.ramaisFilter = ramaisFilter;
+	}
+
+	public Log getLog() {
+		return log;
+	}
+
+	public void setLog(Log log) {
+		this.log = log;
+	}
 
 	public Ramal getSelectRamal() {
 		return selectRamal;
@@ -49,11 +68,11 @@ public class ConsultaBean {
 
 	@PostConstruct
 	public void init() {
-		
+
 		ramais = new ArrayList<Ramal>();
 		RamalDao dao = RamalDaoFactory.createRamalDao();
 		ramais = dao.listarTudo();
-		//ramais = null;
+		// ramais = null;
 		// recupera a hora de acordo com o servidor TOMCAT, porém não sei o
 		// motivo está retornando a hora de fuso horário (timezone) diferente
 		Date data = new Date();
@@ -61,8 +80,7 @@ public class ConsultaBean {
 		// formatador de data do tipo Date, onde os parametros yyyy, MM, etc,
 		// são identificadores definidos na classe, então para outras
 		// formatações, é necessário verificar a documentação da classe
-		SimpleDateFormat formatDate = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		// timezone define um timezone para a classe Calendar, como está meio
 		// que com bug o TOMCAT, utilizei outra forma de recuperar a data que
@@ -82,20 +100,22 @@ public class ConsultaBean {
 		String dataFormatada = formatDate.format(data);
 
 		System.out.println(dataFormatada);
+			
+		
 
 	}
 
 	public void atualizar() {
 
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage("Campo Atualizado"));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Campo Atualizado"));
 		RamalDao daoRamal = RamalDaoFactory.createRamalDao();
 		daoRamal.atualizar(selectRamal);
 
 		log.setCategoriaNew(selectRamal.getCategoria());
 		log.setTipoDeRamalNew(selectRamal.getTipoDeRamal());
 		log.setLocalNew(selectRamal.getLocal());
-		
+		log.setObservacoesNew(selectRamal.getObservacoes());
+
 		LogDao daoLog = LogDaoFactory.createLogDaoFactory();
 		daoLog.adicionar(log);
 		this.init();
@@ -106,45 +126,42 @@ public class ConsultaBean {
 
 		this.init();
 
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage("Ação Cancelada"));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ação Cancelada"));
 		ramalTemp = new Ramal();
 	}
 
 	public void remover() {
 
-		
 		RamalDao daoRamal = RamalDaoFactory.createRamalDao();
 		daoRamal.remover(ramalTemp);
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage("Ramal Removido"));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ramal Removido"));
 		// ramalTemp = new Ramal();
 		this.init();
 	}
 
 	public void onRowSelect(SelectEvent event) {
 
-		// recupera a hora de acordo com o servidor TOMCAT, porém não sei o
-		// motivo está retornando a hora de fuso horário (timezone) diferente
+		// // recupera a hora de acordo com o servidor TOMCAT, porém não sei o
+		// // motivo está retornando a hora de fuso horário (timezone) diferente
 		Date data = new Date();
-
-		// formatador de data do tipo Date, onde os parametros yyyy, MM, etc,
-		// são identificadores definidos na classe, então para outras
-		// formatações, é necessário verificar a documentação da classe
-		SimpleDateFormat formatDate = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss");
-
-		// timezone define um timezone para a classe Calendar, como está meio
-		// que com bug o TOMCAT, utilizei outra forma de recuperar a data que
-		// preciso
+		//
+		// // formatador de data do tipo Date, onde os parametros yyyy, MM, etc,
+		// // são identificadores definidos na classe, então para outras
+		// // formatações, é necessário verificar a documentação da classe
+		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//
+		// // timezone define um timezone para a classe Calendar, como está meio
+		// // que com bug o TOMCAT, utilizei outra forma de recuperar a data que
+		// // preciso
 		TimeZone timeZone = TimeZone.getTimeZone("America/Recife");
 		Calendar c1 = Calendar.getInstance(timeZone);
 		c1.setTimeZone(timeZone);
-
-		// criando Date utilizei os metodos decripitadors, porque foi a única
-		// maneira que encontrei de recuperar a data para ser formatada pelo
-		// SimpleDateFormat, uma vez que usando c1.getTime não estava retonando
-		// o novo timezone que define em 72.
+		//
+		// // criando Date utilizei os metodos decripitadors, porque foi a única
+		// // maneira que encontrei de recuperar a data para ser formatada pelo
+		// // SimpleDateFormat, uma vez que usando c1.getTime não estava
+		// retonando
+		// // o novo timezone que define em 72.
 		data = c1.getTime();
 		data.setHours(c1.get(Calendar.HOUR_OF_DAY));
 		data.setMinutes(c1.get(Calendar.MINUTE));
@@ -159,6 +176,7 @@ public class ConsultaBean {
 		log.setCategoriaOld(ramalTemp.getCategoria());
 		log.setTipoDeRamalOld(ramalTemp.getTipoDeRamal());
 		log.setLocalOld(ramalTemp.getLocal());
+		log.setObservacoesOld(ramalTemp.getObservacoes());
 	}
 
 }

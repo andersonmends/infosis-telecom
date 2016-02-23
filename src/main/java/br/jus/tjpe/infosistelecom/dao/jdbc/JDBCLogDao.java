@@ -25,8 +25,7 @@ public class JDBCLogDao implements LogDao {
 		ArrayList<Log> logs = new ArrayList<Log>();
 
 		try {
-			PreparedStatement prst = con
-					.prepareStatement("SELECT * FROM LOG ORDER BY PK_LOG_ID DESC LIMIT 10");
+			PreparedStatement prst = con.prepareStatement("SELECT * FROM LOG ORDER BY PK_LOG_ID DESC LIMIT 10");
 
 			ResultSet rs = prst.executeQuery();
 
@@ -42,6 +41,8 @@ public class JDBCLogDao implements LogDao {
 				log.setTipoDeRamalOld(rs.getString("LOG_ST_TipoDeRamalOld"));
 				log.setLocalNew(rs.getString("LOG_NM_LocalNew"));
 				log.setLocalOld(rs.getString("LOG_NM_LocalOld"));
+				log.setObservacoesNew(rs.getString("LOG_DS_ObservacoesNew"));
+				log.setObservacoesOld(rs.getString("LOG_DS_ObservacoesOld"));
 				log.setFoneRamal(Long.toString(rs.getLong("FK_RAMAL_LOG_Fone")));
 				logs.add(log);
 
@@ -61,8 +62,7 @@ public class JDBCLogDao implements LogDao {
 	public void adicionar(Log l) {
 
 		try {
-			PreparedStatement prst = con
-					.prepareStatement("INSERT INTO LOG VALUES (?,?,?,?,?,?,?,?,?,?) ");
+			PreparedStatement prst = con.prepareStatement("INSERT INTO LOG VALUES (?,?,?,?,?,?,?,?,?,?,?,?) ");
 
 			prst.setNull(1, 0);
 			prst.setString(2, l.getData());
@@ -70,10 +70,12 @@ public class JDBCLogDao implements LogDao {
 			prst.setString(4, l.getCategoriaNew());
 			prst.setString(5, l.getCategoriaOld());
 			prst.setString(6, l.getTipoDeRamalNew());
-			prst.setString(7, l.getTipoDeRamalOld());			
+			prst.setString(7, l.getTipoDeRamalOld());
 			prst.setString(8, l.getLocalNew());
 			prst.setString(9, l.getLocalOld());
-			prst.setLong(10, Long.parseLong(l.getFoneRamal()));
+			prst.setString(10, l.getObservacoesNew());
+			prst.setString(11, l.getObservacoesOld());
+			prst.setLong(12, Long.parseLong(l.getFoneRamal()));
 			prst.execute();
 			prst.close();
 
@@ -99,13 +101,12 @@ public class JDBCLogDao implements LogDao {
 	}
 
 	@Override
-	public ArrayList<Log> pesquisa(String ramal, String inicio, String fim,
-			String usuario) {
+	public ArrayList<Log> pesquisa(String ramal, String inicio, String fim, String usuario) {
 		ArrayList<Log> logs = new ArrayList<Log>();
 
 		try {
-			PreparedStatement prst = con
-					.prepareStatement("SELECT * FROM LOG WHERE FK_RAMAL_LOG_Fone like ? AND LOG_DT_Data BETWEEN ? AND ? AND LOG_NM_Usuario like ? ORDER BY LOG_DT_Data ASC");
+			PreparedStatement prst = con.prepareStatement(
+					"SELECT * FROM LOG WHERE FK_RAMAL_LOG_Fone like ? AND LOG_DT_Data BETWEEN ? AND ? AND LOG_NM_Usuario like ? ORDER BY LOG_DT_Data ASC");
 			prst.setString(1, "%" + ramal + "%");
 			prst.setString(2, inicio + " 00:00:00");
 			prst.setString(3, fim + " 23:59:59");
@@ -125,6 +126,8 @@ public class JDBCLogDao implements LogDao {
 				log.setTipoDeRamalOld(rs.getString("LOG_ST_TipoDeRamalOld"));
 				log.setLocalNew(rs.getString("LOG_NM_LocalNew"));
 				log.setLocalOld(rs.getString("LOG_NM_LocalOld"));
+				log.setObservacoesNew(rs.getString("LOG_DS_ObservacoesNew"));
+				log.setObservacoesOld(rs.getString("LOG_DS_ObservacoesOld"));
 				log.setFoneRamal(Long.toString(rs.getLong("FK_RAMAL_LOG_Fone")));
 				logs.add(log);
 				// System.out.println(log.getData());
