@@ -26,6 +26,13 @@
 .ui-datatable {
 	font-size: 12px !important;
 }
+
+.menu .ui-selectonemenu-label { 
+    font-size: 12px !important;
+}
+.panel .ui-selectonemenu-list { 
+    font-size: 12px !important;
+}
 </style>
 
 </h:head>
@@ -34,8 +41,8 @@
 
 <h:form id="formPrincipal">
 	<p:growl id="messages" autoUpdate="true" life="2000" />
+	<p:messages autoUpdate="true" />
 
-	<br />
 	<br />
 
 	<p:dataTable id="ramaisTabela" var="ramal"
@@ -43,8 +50,7 @@
 		selectionMode="single" selection="#{consultaBean.selectRamal}"
 		rowKey="#{ramal.fone}" onRowSelectComplete="dlgEdit.show()"
 		paginatorPosition="bottom" paginatorAlwaysVisible="true" pageLinks="5"
-		filteredValue="#{consultaBean.ramaisFilter}" scrollable="true"
-		loadingMessage="Buscando...">
+		filteredValue="#{consultaBean.ramaisFilter}">
 
 		<p:ajax event="rowDblselect" update=":formPrincipal"
 			oncomplete="dlgEdit.show()" listener="#{consultaBean.onRowSelect}" />
@@ -52,8 +58,9 @@
 
 		<p:column filterBy="#{ramal.fone}" sortBy="#{ramal.fone} " width="80"
 			headerText="Ramal" filterMatchMode="contains">
-
-			<h:outputText value="#{ramal.fone}" />
+			<h:outputText value="#{ramal.fone}">
+				<f:converter converterId="br.jus.tjpe.infosistelecom.converter.FoneConverter"/>
+			</h:outputText>
 		</p:column>
 
 
@@ -169,7 +176,7 @@ ________________________________________________________________________________
 
 
 	<p:dialog widgetVar="dlgEdit" id="dlgEdit" header="Editar" height="450"
-		width="700" modal="true" resizable="false">
+		width="680" resizable="false">
 
 		<p:panelGrid id="pgridEdit" columns="2" styleClass="semBorda">
 
@@ -197,41 +204,88 @@ ________________________________________________________________________________
 				styleClass="larguraInput" readonly="true" />
 
 			<h:outputText value="Ramal" />
-			<p:inputText value="#{consultaBean.selectRamal.fone}"
-				styleClass="larguraInput" readonly="true" />
+			<p:inputMask value="#{consultaBean.selectRamal.fone}"
+				styleClass="larguraInput" readonly="true" mask="(99) 9999-9999">
+				
+
+			</p:inputMask>
+
 
 
 			<h:outputText value="Situação" />
 			<p:inputText value="#{consultaBean.selectRamal.situacao}"
-				styleClass="larguraInput" readonly="true" style="width: 470px" />
+				styleClass="larguraInput" readonly="true"
+				rendered="#{consultaBean.renderedInputText}" />
+			<p:selectOneMenu style="width: 480px"
+				value="#{consultaBean.selectRamal.situacao}" required="true"
+				requiredMessage="Situação não preenchida"
+				rendered="#{consultaBean.renderedSelectMenu}" styleClass="menu" panelStyleClass="panel">
+				<f:selectItem itemLabel="SELECIONE UM ITEM" noSelectionOption="true" />
+				<f:selectItem itemLabel="ATIVO" itemValue="ATIVO" />
+				<f:selectItem itemLabel="INATIVO" itemValue="INATIVO" />
+				<f:selectItem itemLabel="BLOQUEADO" itemValue="BLOQUEADO" />
+				<f:selectItem itemLabel="VIRTUAL" itemValue="VIRTUAL" />
+				<f:validateRequired />
+			</p:selectOneMenu>
 
 
 			<h:outputText value="Circuito" />
 			<p:inputText value="#{consultaBean.selectRamal.circuito}"
-				styleClass="larguraInput" readonly="true" />
+				styleClass="larguraInput" readonly="#{consultaBean.readOnly}" />
+
 
 			<h:outputText value="Categoria" />
 			<p:inputText value="#{consultaBean.selectRamal.categoria}"
-				styleClass="larguraInput" readonly="true" />
+				styleClass="larguraInput" readonly="true"
+				rendered="#{consultaBean.renderedInputText}" />
+			<p:selectOneMenu style="width: 480px"
+				value="#{consultaBean.selectRamal.categoria}" required="true"
+				requiredMessage="Categoria não preenchida"
+				rendered="#{consultaBean.renderedSelectMenu}" styleClass="menu" panelStyleClass="panel">
+				<f:selectItem itemLabel="SELECIONE UM ITEM" noSelectionOption="true"  />
+				<f:selectItem itemLabel="1" itemValue="1" id="cat" />
+				<f:selectItem itemLabel="2" itemValue="2" />
+				<f:selectItem itemLabel="3" itemValue="3" />
+				<f:selectItem itemLabel="4" itemValue="4" />
+				<f:selectItem itemLabel="5" itemValue="5" />
+				<f:selectItem itemLabel="6" itemValue="6" />
+				<f:selectItem itemLabel="7" itemValue="7" />
+				<f:selectItem itemLabel="8" itemValue="8" />
+				<f:selectItem itemLabel="9" itemValue="9" />
+				<f:selectItem itemLabel="10" itemValue="10" />
+				<f:validateRequired />
+			</p:selectOneMenu>
 
-			<h:outputText value="Tipo do Ramal" />
+
+
+			<h:outputText value="Tipo de Ramal" />
 			<p:inputText value="#{consultaBean.selectRamal.tipoDeRamal}"
-				styleClass="larguraInput" readonly="true" />
+				styleClass="larguraInput" readonly="true"
+				rendered="#{consultaBean.renderedInputText}" />
+			<p:selectOneMenu style="width: 480px"
+				value="#{consultaBean.selectRamal.tipoDeRamal}" required="true"
+				requiredMessage="Tipo de ramal não preenchido"
+				rendered="#{consultaBean.renderedSelectMenu}" styleClass="menu" panelStyleClass="panel">
+				<f:selectItem itemLabel="SELECIONE UM ITEM" noSelectionOption="true" />
+				<f:selectItem itemLabel="ANALÓGICO" itemValue="ANALÓGICO" />
+				<f:selectItem itemLabel="DIGITAL BÁSICO" itemValue="DIGITAL BÁSICO" />
+				<f:validateRequired />
+			</p:selectOneMenu>
 
 
 			<h:outputText value="Local" />
 			<p:inputText value="#{consultaBean.selectRamal.local}"
-				styleClass="larguraInput" readonly="true" />
+				styleClass="larguraInput" readonly="#{consultaBean.readOnly}" />
 
 			<h:outputText value="Observações" />
 			<p:inputText value="#{consultaBean.selectRamal.observacoes}"
-				styleClass="larguraInput" readonly="false" />
+				styleClass="larguraInput" readonly="#{consultaBean.readOnly}" />
 
 		</p:panelGrid>
 		<br />
 
-		<!-- Botões desabilitados -->
-		<p:panelGrid columns="3" style="margin-left:310px"
+
+		<p:panelGrid columns="3" style="margin-left:415px"
 			styleClass="semBorda" rendered="true">
 
 			<p:commandButton value="Cancelar"
@@ -240,14 +294,13 @@ ________________________________________________________________________________
 
 			<p:commandButton value="Remover"
 				actionListener="#{consultaBean.remover()}" ajax="true"
-				update="ramaisTabela" onclick="dlgEdit.hide()"
-				 />
+				update="ramaisTabela" onclick="dlgEdit.hide()" rendered="false" />
 
 			<p:commandButton value="Confimar"
 				actionListener="#{consultaBean.atualizar}" update="ramaisTabela"
 				ajax="true" onclick="dlgEdit.hide()" />
 		</p:panelGrid>
-		<!-- Botões desabilitados -->
+
 
 	</p:dialog>
 

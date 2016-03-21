@@ -7,15 +7,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 
-import br.jus.tjpe.infosistelecom.dao.TecnicoDao;
-import br.jus.tjpe.infosistelecom.factory.TecnicoDaoFactory;
-import br.jus.tjpe.infosistelecom.modelo.Tecnico;
+import br.jus.tjpe.infosistelecom.dao.UsuarioDao;
+import br.jus.tjpe.infosistelecom.factory.UsuarioDaoFactory;
+import br.jus.tjpe.infosistelecom.modelo.Usuario;
 
 @ManagedBean
 @ViewScoped
 public class PoloBean {
 
-	private ArrayList<Tecnico> tecnicos;
+	private ArrayList<Usuario> usuarios;
 	private String selectTecnico;
 	private String teste;
 	
@@ -39,21 +39,21 @@ public class PoloBean {
 	}
 
 
-	public ArrayList<Tecnico> getTecnicos() {
-		return tecnicos;
+	public ArrayList<Usuario> getTecnicos() {
+		return usuarios;
 	}
 
 
-	public void setTecnicos(ArrayList<Tecnico> tecnicos) {
-		this.tecnicos = tecnicos;
+	public void setTecnicos(ArrayList<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 
 	@PostConstruct
 	public void init() {
 
-		//TecnicoDao dao = TecnicoDaoFactory.createTecnicoDao();
-		//tecnicos = dao.listarTudo();
+		//UsuarioDao dao = UsuarioDaoFactory.createTecnicoDao();
+		//usuarios = dao.listarTudo();
 		
 		System.out.print("teste");
 		

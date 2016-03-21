@@ -10,7 +10,7 @@ import br.jus.tjpe.infosistelecom.dao.ComarcaDao;
 import br.jus.tjpe.infosistelecom.factory.ComarcaDaoFactory;
 import br.jus.tjpe.infosistelecom.factory.ConnectionFactory;
 import br.jus.tjpe.infosistelecom.modelo.Comarca;
-import br.jus.tjpe.infosistelecom.modelo.Tecnico;
+import br.jus.tjpe.infosistelecom.modelo.Usuario;
 
 public class JDBCComarcaDao implements ComarcaDao {
 
@@ -76,7 +76,7 @@ public class JDBCComarcaDao implements ComarcaDao {
 	}
 
 	@Override
-	public Tecnico buscar(Comarca c) {
+	public Usuario buscar(Comarca c) {
 		// TODO Auto-generated method stub
 		return null;
 	}

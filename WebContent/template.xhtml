@@ -23,7 +23,6 @@
 .text {
 	font-size: 14px !important;
 }
-
 </style>
 
 </h:head>
@@ -31,13 +30,19 @@
 <h:body
 	style=" width: 92%; margin:0 auto; max-width:968px; min-width: 740px">
 
+	<p:growl autoUpdate="true" life="2000" id="growl" />
+
 	<div
 		style="height: 110px; background: #EEEEEE url('imagens/head.jpg') no-repeat scroll left top; background-position: -10px 0px; margin: 0; margin: 0 0 0 2px; width: 99.44%;"></div>
 
 	<div>
+		<p:panelGrid columns="2" styleClass="semBorda" rendered="true"
+			style=" width: 117%;">
+			<h:outputText value="Infosis Telecom"
+				style="font-size: 32px;  font-weight: bold; color:#666666; font-family:Times New Roman;" />
+					</p:panelGrid>
 
 
-		<h1 class="font">Infosis Telecom</h1>
 
 		<h:form>
 			<p:menubar autoDisplay="false"
@@ -47,7 +52,7 @@
 
 				</p:submenu>
 
-				<p:submenu label="Levantamento">
+				<p:submenu label="Levantamento" rendered="false">
 
 					<p:menuitem value="Incluir" />
 					<p:menuitem value="Alterar" />
@@ -55,7 +60,7 @@
 
 				</p:submenu>
 
-				<p:submenu label="Relatório">
+				<p:submenu label="Relatório" rendered="false">
 
 					<p:menuitem value="Irregularidades PE Conectado" />
 					<p:menuitem value="Infraestrutura" />
@@ -72,7 +77,16 @@
 					<p:menuitem value="Excluir" />
 
 				</p:submenu>
+				<f:facet name="options">
+
+					<p:commandButton type="submit" value="Logout"
+						icon="ui-icon-extlink" update="growl" 
+						ajax="false" actionListener="#{loginBean.logout}" />
+				</f:facet>
+
 			</p:menubar>
+
+
 		</h:form>
 
 

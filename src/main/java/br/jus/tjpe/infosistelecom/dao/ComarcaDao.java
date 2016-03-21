@@ -3,7 +3,7 @@ package br.jus.tjpe.infosistelecom.dao;
 import java.util.ArrayList;
 
 import br.jus.tjpe.infosistelecom.modelo.Comarca;
-import br.jus.tjpe.infosistelecom.modelo.Tecnico;
+import br.jus.tjpe.infosistelecom.modelo.Usuario;
 
 public interface ComarcaDao {
 	
@@ -15,7 +15,7 @@ public interface ComarcaDao {
 
 	public void atualizar(Comarca c);
 	
-	public Tecnico buscar(Comarca c);
+	public Usuario buscar(Comarca c);
 
 
 }

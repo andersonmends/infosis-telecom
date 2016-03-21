@@ -3,13 +3,13 @@ import java.util.Iterator;
 
 import br.jus.tjpe.infosistelecom.dao.ComarcaDao;
 import br.jus.tjpe.infosistelecom.dao.FotoDao;
-import br.jus.tjpe.infosistelecom.dao.TecnicoDao;
+import br.jus.tjpe.infosistelecom.dao.UsuarioDao;
 import br.jus.tjpe.infosistelecom.factory.ComarcaDaoFactory;
 import br.jus.tjpe.infosistelecom.factory.FotoDaoFactory;
-import br.jus.tjpe.infosistelecom.factory.TecnicoDaoFactory;
+import br.jus.tjpe.infosistelecom.factory.UsuarioDaoFactory;
 import br.jus.tjpe.infosistelecom.modelo.Comarca;
 import br.jus.tjpe.infosistelecom.modelo.Foto;
-import br.jus.tjpe.infosistelecom.modelo.Tecnico;
+import br.jus.tjpe.infosistelecom.modelo.Usuario;
 
 public class Teste {
 
@@ -25,18 +25,17 @@ public class Teste {
 //		System.out.println(fotos.get(0).getNome());
 //		System.out.println(fotos.get(0).getEndereco());
 		
-		Tecnico t = new Tecnico();
+		Usuario t = new Usuario();
 		t.setLogin("amesantos");
-		t.setSenha("12345");
+
 		
-		TecnicoDao dao = TecnicoDaoFactory.createTecnicoDao();
-		Tecnico temp = dao.buscar(t);
+		UsuarioDao dao = UsuarioDaoFactory.createUsuarioDao();
+		Usuario temp = dao.buscar(t);
 		
 		System.out.println(temp.getLogin());
 		System.out.println(temp.getMatricula());
-		System.out.println(temp.getNome());
-		System.out.println(temp.getPolo());
-		System.out.println(temp.getSenha());
+
+
 
 	}
 }

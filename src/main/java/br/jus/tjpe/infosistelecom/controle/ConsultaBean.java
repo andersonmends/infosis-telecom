@@ -2,10 +2,13 @@ package br.jus.tjpe.infosistelecom.controle;
 
 import br.jus.tjpe.infosistelecom.dao.LogDao;
 import br.jus.tjpe.infosistelecom.dao.RamalDao;
+import br.jus.tjpe.infosistelecom.dao.UsuarioDao;
 import br.jus.tjpe.infosistelecom.factory.LogDaoFactory;
 import br.jus.tjpe.infosistelecom.factory.RamalDaoFactory;
+import br.jus.tjpe.infosistelecom.factory.UsuarioDaoFactory;
 import br.jus.tjpe.infosistelecom.modelo.Log;
 import br.jus.tjpe.infosistelecom.modelo.Ramal;
+import br.jus.tjpe.infosistelecom.modelo.Usuario;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +24,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.event.SelectEvent;
 
@@ -33,6 +38,42 @@ public class ConsultaBean {
 	private Ramal selectRamal = new Ramal();
 	private Ramal ramalTemp = new Ramal();
 	private Log log = new Log();
+	private String readOnly = "true"; // configura o tipo de readOnly do usuário, caso seja 0, ele pode editar informações do ramal
+	private String renderedInputText = "true"; 
+	private String renderedSelectMenu = "false";
+
+	public String getReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(String readOnly) {
+		this.readOnly = readOnly;
+	}
+
+	public String getRenderedInputText() {
+		return renderedInputText;
+	}
+
+	public void setRenderedInputText(String renderedInputText) {
+		this.renderedInputText = renderedInputText;
+	}
+
+	public String getRenderedSelectMenu() {
+		return renderedSelectMenu;
+	}
+
+	public void setRenderedSelectMenu(String renderedSelectMenu) {
+		this.renderedSelectMenu = renderedSelectMenu;
+	}
+
+	public Ramal getRamalTemp() {
+		return ramalTemp;
+	}
+
+	public void setRamalTemp(Ramal ramalTemp) {
+		this.ramalTemp = ramalTemp;
+	}
+
 
 	public List<Ramal> getRamaisFilter() {
 		return ramaisFilter;
@@ -72,6 +113,10 @@ public class ConsultaBean {
 		ramais = new ArrayList<Ramal>();
 		RamalDao dao = RamalDaoFactory.createRamalDao();
 		ramais = dao.listarTudo();
+		
+		
+		
+		
 		// ramais = null;
 		// recupera a hora de acordo com o servidor TOMCAT, porém não sei o
 		// motivo está retornando a hora de fuso horário (timezone) diferente
@@ -140,7 +185,38 @@ public class ConsultaBean {
 	}
 
 	public void onRowSelect(SelectEvent event) {
+		
+		try {
+			HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+			HttpSession session = request.getSession();
+			Usuario usuario = (Usuario)session.getAttribute("usuario");
+			System.out.println(usuario.getLogin());
+			
+			UsuarioDao dao = UsuarioDaoFactory.createUsuarioDao();
+			Usuario user = new Usuario();
+			
+			user.setLogin(usuario.getLogin());
+			
+			user = dao.buscar(user);
+			
+			if (user.getPermissao().equals("0")) {
+				readOnly = "false";
+				renderedInputText = "false";
+				renderedSelectMenu = "true";
+				System.out.println("teste");
+			}else {
+				readOnly = "true";
+				renderedInputText = "true";
+				renderedSelectMenu = "false";
+			}
+		} catch (Exception e) {
+			readOnly = "true";
+			renderedInputText = "true";
+			renderedSelectMenu = "false";
+		}
 
+		
+		
 		// // recupera a hora de acordo com o servidor TOMCAT, porém não sei o
 		// // motivo está retornando a hora de fuso horário (timezone) diferente
 		Date data = new Date();
@@ -170,7 +246,7 @@ public class ConsultaBean {
 
 		ramalTemp = (Ramal) event.getObject();
 
-		log.setFoneRamal(ramalTemp.getFone());
+//		log.setFoneRamal(ramalTemp.getFone());
 		log.setData(dataFormatada);
 		log.setUsuario("");
 		log.setCategoriaOld(ramalTemp.getCategoria());
