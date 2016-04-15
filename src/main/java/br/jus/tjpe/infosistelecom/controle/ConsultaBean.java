@@ -1,12 +1,15 @@
 package br.jus.tjpe.infosistelecom.controle;
 
 import br.jus.tjpe.infosistelecom.dao.LogDao;
+import br.jus.tjpe.infosistelecom.dao.OrgaoDao;
 import br.jus.tjpe.infosistelecom.dao.RamalDao;
 import br.jus.tjpe.infosistelecom.dao.UsuarioDao;
 import br.jus.tjpe.infosistelecom.factory.LogDaoFactory;
+import br.jus.tjpe.infosistelecom.factory.OrgaoDaoFactory;
 import br.jus.tjpe.infosistelecom.factory.RamalDaoFactory;
 import br.jus.tjpe.infosistelecom.factory.UsuarioDaoFactory;
 import br.jus.tjpe.infosistelecom.modelo.Log;
+import br.jus.tjpe.infosistelecom.modelo.Orgao;
 import br.jus.tjpe.infosistelecom.modelo.Ramal;
 import br.jus.tjpe.infosistelecom.modelo.Usuario;
 
@@ -24,6 +27,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -35,12 +39,32 @@ public class ConsultaBean {
 
 	private ArrayList<Ramal> ramais = new ArrayList<Ramal>();
 	private List<Ramal> ramaisFilter;
+	private List<String> cidades = new ArrayList<String>();
+	private List<String> orgaos = new ArrayList<String>();
 	private Ramal selectRamal = new Ramal();
 	private Ramal ramalTemp = new Ramal();
 	private Log log = new Log();
-	private String readOnly = "true"; // configura o tipo de readOnly do usuário, caso seja 0, ele pode editar informações do ramal
-	private String renderedInputText = "true"; 
+	private String readOnly = "true"; // configura o tipo de readOnly do
+										// usuário, caso seja 0, ele pode editar
+										// informações do ramal
+	private String renderedInputText = "true";
 	private String renderedSelectMenu = "false";
+
+	public List<String> getOrgaos() {
+		return orgaos;
+	}
+
+	public void setOrgaos(List<String> orgaos) {
+		this.orgaos = orgaos;
+	}
+
+	public List<String> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<String> cidades) {
+		this.cidades = cidades;
+	}
 
 	public String getReadOnly() {
 		return readOnly;
@@ -73,7 +97,6 @@ public class ConsultaBean {
 	public void setRamalTemp(Ramal ramalTemp) {
 		this.ramalTemp = ramalTemp;
 	}
-
 
 	public List<Ramal> getRamaisFilter() {
 		return ramaisFilter;
@@ -113,10 +136,7 @@ public class ConsultaBean {
 		ramais = new ArrayList<Ramal>();
 		RamalDao dao = RamalDaoFactory.createRamalDao();
 		ramais = dao.listarTudo();
-		
-		
-		
-		
+
 		// ramais = null;
 		// recupera a hora de acordo com o servidor TOMCAT, porém não sei o
 		// motivo está retornando a hora de fuso horário (timezone) diferente
@@ -144,15 +164,12 @@ public class ConsultaBean {
 		data.setSeconds(c1.get(Calendar.SECOND));
 		String dataFormatada = formatDate.format(data);
 
-		System.out.println(dataFormatada);
-			
-		
-
 	}
 
 	public void atualizar() {
 
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Campo Atualizado"));
+
 		RamalDao daoRamal = RamalDaoFactory.createRamalDao();
 		daoRamal.atualizar(selectRamal);
 
@@ -184,75 +201,119 @@ public class ConsultaBean {
 		this.init();
 	}
 
+	public void valueChangeCidade() {
+		OrgaoDao daoOrgao = OrgaoDaoFactory.createOrgaoDao();
+		ArrayList<Orgao> o = daoOrgao.listarOrgaosPorCidade(selectRamal.getOrgao().getCidade());
+		orgaos.clear();
+		for (Orgao orgao : o) {
+			orgaos.add(orgao.getUnidade());
+		}
+		
+		Orgao orgao = daoOrgao.buscar(orgaos.get(0));
+		System.out.println(orgaos.get(0));
+		System.out.println(orgao.getUnidade());
+		selectRamal.getOrgao().setCentroDeCusto(orgao.getCentroDeCusto());
+		selectRamal.getOrgao().setEndereco(orgao.getEndereco());
+		selectRamal.getOrgao().setPolo(orgao.getPolo());
+		
+	}
+
+	public void valueChangeOrgao() {
+		OrgaoDao daoOrgao = OrgaoDaoFactory.createOrgaoDao();
+		Orgao orgao = daoOrgao.buscar(selectRamal.getOrgao().getUnidade());
+		selectRamal.getOrgao().setCentroDeCusto(orgao.getCentroDeCusto());
+		selectRamal.getOrgao().setEndereco(orgao.getEndereco());
+		selectRamal.getOrgao().setPolo(orgao.getPolo());
+		
+
+	}
+
 	public void onRowSelect(SelectEvent event) {
 		
+		
+
 		try {
-			HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+			HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+					.getRequest();
 			HttpSession session = request.getSession();
-			Usuario usuario = (Usuario)session.getAttribute("usuario");
-			System.out.println(usuario.getLogin());
-			
-			UsuarioDao dao = UsuarioDaoFactory.createUsuarioDao();
+			Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+			UsuarioDao daoUsuario = UsuarioDaoFactory.createUsuarioDao();
 			Usuario user = new Usuario();
-			
+
 			user.setLogin(usuario.getLogin());
-			
-			user = dao.buscar(user);
-			
+
+			user = daoUsuario.buscar(user);
+
 			if (user.getPermissao().equals("0")) {
 				readOnly = "false";
 				renderedInputText = "false";
 				renderedSelectMenu = "true";
 				System.out.println("teste");
-			}else {
+			} else {
 				readOnly = "true";
 				renderedInputText = "true";
 				renderedSelectMenu = "false";
 			}
+
+			OrgaoDao daoOrgao = OrgaoDaoFactory.createOrgaoDao();
+			cidades = daoOrgao.listarCidades();
+			ArrayList<Orgao> o = daoOrgao.listarOrgaosPorCidade(selectRamal.getOrgao().getCidade());
+			orgaos.clear();
+			for (Orgao orgao : o) {
+				orgaos.add(orgao.getUnidade());
+			}
+
+			// // recupera a hora de acordo com o servidor TOMCAT, porém não sei
+			// o
+			// // motivo está retornando a hora de fuso horário (timezone)
+			// diferente
+			Date data = new Date();
+			//
+			// // formatador de data do tipo Date, onde os parametros yyyy, MM,
+			// etc,
+			// // são identificadores definidos na classe, então para outras
+			// // formatações, é necessário verificar a documentação da classe
+			SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			//
+			// // timezone define um timezone para a classe Calendar, como está
+			// meio
+			// // que com bug o TOMCAT, utilizei outra forma de recuperar a data
+			// que
+			// // preciso
+			TimeZone timeZone = TimeZone.getTimeZone("America/Recife");
+			Calendar c1 = Calendar.getInstance(timeZone);
+			c1.setTimeZone(timeZone);
+			//
+			// // criando Date utilizei os metodos decripitadors, porque foi a
+			// única
+			// // maneira que encontrei de recuperar a data para ser formatada
+			// pelo
+			// // SimpleDateFormat, uma vez que usando c1.getTime não estava
+			// retonando
+			// // o novo timezone que define em 72.
+			data = c1.getTime();
+			data.setHours(c1.get(Calendar.HOUR_OF_DAY));
+			data.setMinutes(c1.get(Calendar.MINUTE));
+			data.setSeconds(c1.get(Calendar.SECOND));
+			String dataFormatada = formatDate.format(data);
+
+			ramalTemp = (Ramal) event.getObject();
+
+			log.setFoneRamal(ramalTemp.getFone());
+			log.setData(dataFormatada);
+			log.setUsuario(usuario.getLogin());
+			log.setCategoriaOld(ramalTemp.getCategoria());
+			log.setTipoDeRamalOld(ramalTemp.getTipoDeRamal());
+			log.setLocalOld(ramalTemp.getLocal());
+			log.setObservacoesOld(ramalTemp.getObservacoes());
+
 		} catch (Exception e) {
 			readOnly = "true";
 			renderedInputText = "true";
 			renderedSelectMenu = "false";
 		}
 
-		
-		
-		// // recupera a hora de acordo com o servidor TOMCAT, porém não sei o
-		// // motivo está retornando a hora de fuso horário (timezone) diferente
-		Date data = new Date();
-		//
-		// // formatador de data do tipo Date, onde os parametros yyyy, MM, etc,
-		// // são identificadores definidos na classe, então para outras
-		// // formatações, é necessário verificar a documentação da classe
-		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		//
-		// // timezone define um timezone para a classe Calendar, como está meio
-		// // que com bug o TOMCAT, utilizei outra forma de recuperar a data que
-		// // preciso
-		TimeZone timeZone = TimeZone.getTimeZone("America/Recife");
-		Calendar c1 = Calendar.getInstance(timeZone);
-		c1.setTimeZone(timeZone);
-		//
-		// // criando Date utilizei os metodos decripitadors, porque foi a única
-		// // maneira que encontrei de recuperar a data para ser formatada pelo
-		// // SimpleDateFormat, uma vez que usando c1.getTime não estava
-		// retonando
-		// // o novo timezone que define em 72.
-		data = c1.getTime();
-		data.setHours(c1.get(Calendar.HOUR_OF_DAY));
-		data.setMinutes(c1.get(Calendar.MINUTE));
-		data.setSeconds(c1.get(Calendar.SECOND));
-		String dataFormatada = formatDate.format(data);
-
-		ramalTemp = (Ramal) event.getObject();
-
-//		log.setFoneRamal(ramalTemp.getFone());
-		log.setData(dataFormatada);
-		log.setUsuario("");
-		log.setCategoriaOld(ramalTemp.getCategoria());
-		log.setTipoDeRamalOld(ramalTemp.getTipoDeRamal());
-		log.setLocalOld(ramalTemp.getLocal());
-		log.setObservacoesOld(ramalTemp.getObservacoes());
 	}
 
 }

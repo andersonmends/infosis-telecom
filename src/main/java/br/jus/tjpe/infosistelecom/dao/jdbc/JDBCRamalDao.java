@@ -1,3 +1,8 @@
+//
+//
+//                         LEMBRAR DE FECHAR AS CONEXÕES QUE NAÔ ESTÂO SENDO FECHADAS< OLHAR O YOUMUSICLIB
+//
+
 package br.jus.tjpe.infosistelecom.dao.jdbc;
 
 import java.sql.Connection;

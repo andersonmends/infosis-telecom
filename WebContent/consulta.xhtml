@@ -27,11 +27,22 @@
 	font-size: 12px !important;
 }
 
-.menu .ui-selectonemenu-label { 
-    font-size: 12px !important;
+.menu .ui-selectonemenu-label {
+	font-size: 12px !important;
 }
-.panel .ui-selectonemenu-list { 
-    font-size: 12px !important;
+
+.panel .ui-selectonemenu-list {
+	font-size: 12px !important;
+}
+
+.ui-growl {
+	width: 370px;
+}
+
+.ui-growl-title {
+	text-align: center;
+	margin-left: -100px;
+	margin-top: 8px;
 }
 </style>
 
@@ -41,7 +52,6 @@
 
 <h:form id="formPrincipal">
 	<p:growl id="messages" autoUpdate="true" life="2000" />
-	<p:messages autoUpdate="true" />
 
 	<br />
 
@@ -59,7 +69,8 @@
 		<p:column filterBy="#{ramal.fone}" sortBy="#{ramal.fone} " width="80"
 			headerText="Ramal" filterMatchMode="contains">
 			<h:outputText value="#{ramal.fone}">
-				<f:converter converterId="br.jus.tjpe.infosistelecom.converter.FoneConverter"/>
+				<f:converter
+					converterId="br.jus.tjpe.infosistelecom.converter.FoneConverter" />
 			</h:outputText>
 		</p:column>
 
@@ -175,38 +186,65 @@ ________________________________________________________________________________
 
 
 
-	<p:dialog widgetVar="dlgEdit" id="dlgEdit" header="Editar" height="450"
+	<p:dialog widgetVar="dlgEdit" id="dlgEdit" header="Editar" height="460"
 		width="680" resizable="false">
 
 		<p:panelGrid id="pgridEdit" columns="2" styleClass="semBorda">
 
 			<h:outputText value="Centro de Custo" />
 			<p:inputText value="#{consultaBean.selectRamal.orgao.centroDeCusto}"
-				styleClass="larguraInput" readonly="true" />
+				styleClass="larguraInput" readonly="true" id="centroDeCusto" />
 
 
 			<h:outputText value="Cidade" />
 			<p:inputText value="#{consultaBean.selectRamal.orgao.cidade}"
-				styleClass="larguraInput" readonly="true" />
+				styleClass="larguraInput" readonly="true"
+				rendered="#{consultaBean.renderedInputText}" />
 
+			<p:selectOneMenu style="width: 480px"
+				value="#{consultaBean.selectRamal.orgao.cidade}" required="true"
+				requiredMessage="Cidade não selecionada" styleClass="menu"
+				panelStyleClass="panel"
+				rendered="#{consultaBean.renderedSelectMenu}">
+				<f:selectItems var="cidade" value="#{consultaBean.cidades}"
+					itemLabel="#{cidade}" itemValue="#{cidade}" />
+				<f:validateRequired />
+				<p:ajax event="change"
+					update="unidade, endereco, centroDeCusto, polo"
+					listener="#{consultaBean.valueChangeCidade()}" />
 
-			<h:outputText value="Endereço" />
-			<p:inputText value="#{consultaBean.selectRamal.orgao.endereco}"
-				styleClass="larguraInput" readonly="true" />
+			</p:selectOneMenu>
 
 			<h:outputText value="Unidade" />
 			<p:inputText value="#{consultaBean.selectRamal.orgao.unidade}"
-				styleClass="larguraInput" readonly="true" />
+				styleClass="larguraInput" readonly="true"
+				rendered="#{consultaBean.renderedInputText}" />
 
+			<p:selectOneMenu style="width: 480px"
+				value="#{consultaBean.selectRamal.orgao.unidade}" required="true"
+				requiredMessage="Situação não preenchida" styleClass="menu"
+				panelStyleClass="panel" id="unidade"
+				rendered="#{consultaBean.renderedSelectMenu}">
+
+				<f:selectItems var="orgao" value="#{consultaBean.orgaos}"
+					itemLabel="#{orgao}" itemValue="#{orgao}" />
+				<f:validateRequired />
+				<p:ajax event="change" update="endereco, centroDeCusto, polo"
+					listener="#{consultaBean.valueChangeOrgao()}" />
+			</p:selectOneMenu>
+
+			<h:outputText value="Endereço" />
+			<p:inputText value="#{consultaBean.selectRamal.orgao.endereco}"
+				styleClass="larguraInput" readonly="true" id="endereco" />
 
 			<h:outputText value="Polo" />
 			<p:inputText value="#{consultaBean.selectRamal.orgao.polo}"
-				styleClass="larguraInput" readonly="true" />
+				styleClass="larguraInput" readonly="true" id="polo" />
 
 			<h:outputText value="Ramal" />
 			<p:inputMask value="#{consultaBean.selectRamal.fone}"
 				styleClass="larguraInput" readonly="true" mask="(99) 9999-9999">
-				
+
 
 			</p:inputMask>
 
@@ -219,7 +257,8 @@ ________________________________________________________________________________
 			<p:selectOneMenu style="width: 480px"
 				value="#{consultaBean.selectRamal.situacao}" required="true"
 				requiredMessage="Situação não preenchida"
-				rendered="#{consultaBean.renderedSelectMenu}" styleClass="menu" panelStyleClass="panel">
+				rendered="#{consultaBean.renderedSelectMenu}" styleClass="menu"
+				panelStyleClass="panel">
 				<f:selectItem itemLabel="SELECIONE UM ITEM" noSelectionOption="true" />
 				<f:selectItem itemLabel="ATIVO" itemValue="ATIVO" />
 				<f:selectItem itemLabel="INATIVO" itemValue="INATIVO" />
@@ -241,8 +280,9 @@ ________________________________________________________________________________
 			<p:selectOneMenu style="width: 480px"
 				value="#{consultaBean.selectRamal.categoria}" required="true"
 				requiredMessage="Categoria não preenchida"
-				rendered="#{consultaBean.renderedSelectMenu}" styleClass="menu" panelStyleClass="panel">
-				<f:selectItem itemLabel="SELECIONE UM ITEM" noSelectionOption="true"  />
+				rendered="#{consultaBean.renderedSelectMenu}" styleClass="menu"
+				panelStyleClass="panel">
+				<f:selectItem itemLabel="SELECIONE UM ITEM" noSelectionOption="true" />
 				<f:selectItem itemLabel="1" itemValue="1" id="cat" />
 				<f:selectItem itemLabel="2" itemValue="2" />
 				<f:selectItem itemLabel="3" itemValue="3" />
@@ -265,7 +305,8 @@ ________________________________________________________________________________
 			<p:selectOneMenu style="width: 480px"
 				value="#{consultaBean.selectRamal.tipoDeRamal}" required="true"
 				requiredMessage="Tipo de ramal não preenchido"
-				rendered="#{consultaBean.renderedSelectMenu}" styleClass="menu" panelStyleClass="panel">
+				rendered="#{consultaBean.renderedSelectMenu}" styleClass="menu"
+				panelStyleClass="panel">
 				<f:selectItem itemLabel="SELECIONE UM ITEM" noSelectionOption="true" />
 				<f:selectItem itemLabel="ANALÓGICO" itemValue="ANALÓGICO" />
 				<f:selectItem itemLabel="DIGITAL BÁSICO" itemValue="DIGITAL BÁSICO" />
@@ -283,21 +324,22 @@ ________________________________________________________________________________
 
 		</p:panelGrid>
 		<br />
-
+		<p:ajax event="close" update="formPrincipal"
+			listener="#{consultaBean.cancelar()}" />
 
 		<p:panelGrid columns="3" style="margin-left:415px"
 			styleClass="semBorda" rendered="true">
 
 			<p:commandButton value="Cancelar"
 				actionListener="#{consultaBean.cancelar()}" ajax="true"
-				update="ramaisTabela" onclick="dlgEdit.hide()" />
+				update="formPrincipal" onclick="dlgEdit.hide()" />
 
 			<p:commandButton value="Remover"
 				actionListener="#{consultaBean.remover()}" ajax="true"
-				update="ramaisTabela" onclick="dlgEdit.hide()" rendered="false" />
+				update="formPrincipal" onclick="dlgEdit.hide()" rendered="false" />
 
 			<p:commandButton value="Confimar"
-				actionListener="#{consultaBean.atualizar}" update="ramaisTabela"
+				actionListener="#{consultaBean.atualizar}" update="formPrincipal"
 				ajax="true" onclick="dlgEdit.hide()" />
 		</p:panelGrid>
 
@@ -318,6 +360,8 @@ ________________________________________________________________________________
 
 	<p:dialog header="Categoria" widgetVar="dlgCategoria" height="220"
 		modal="true" resizable="false" id="dlgCategoria">
+
+
 
 		<h:outputText value="1: " style=" font-weight: bold;" />
 		<h:outputText

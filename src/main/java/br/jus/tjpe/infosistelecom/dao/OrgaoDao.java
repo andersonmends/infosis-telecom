@@ -10,6 +10,8 @@ public interface OrgaoDao {
 	public ArrayList<Orgao> listarTudo();
 	
 	public ArrayList<String> listarCidades();
+	
+	public ArrayList<Orgao> listarOrgaosPorCidade(String cidade);
 
 	public void adicionar(Orgao c);
 

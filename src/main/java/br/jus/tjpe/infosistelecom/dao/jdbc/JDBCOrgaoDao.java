@@ -100,6 +100,7 @@ public class JDBCOrgaoDao implements OrgaoDao {
 				orgao.setCentroDeCusto(rs.getString(("PK_ORGAO_CentroDeCusto")));
 				orgao.setUnidade(rs.getString("ORGAO_NM_Unidade"));
 				orgao.setPredio(rs.getString("ORGAO_NM_Predio"));
+				orgao.setPolo(rs.getString("ORGAO_NM_Polo"));
 				orgao.setCidade(rs.getString("ORGAO_NM_Cidade"));
 				orgao.setEndereco(rs.getString("ORGAO_NM_Endereco"));
 
@@ -137,5 +138,38 @@ public class JDBCOrgaoDao implements OrgaoDao {
 
 		return cidades;
 	}
+
+	@Override
+	public ArrayList<Orgao> listarOrgaosPorCidade(String cidade) {
+		ArrayList<Orgao> orgaos = new ArrayList<Orgao>();
+
+		try {
+			PreparedStatement prst = con
+					.prepareStatement("SELECT * FROM ORGAO WHERE ORGAO_NM_Cidade = ? Group by ORGAO_NM_Unidade ASC");
+
+			prst.setString(1, cidade);
+			ResultSet rs = prst.executeQuery();
+
+			while (rs.next()) {
+
+				Orgao orgao = new Orgao();
+				orgao.setCentroDeCusto(rs.getString(("PK_ORGAO_CentroDeCusto")));
+				orgao.setUnidade(rs.getString("ORGAO_NM_Unidade"));
+				orgao.setPredio(rs.getString("ORGAO_NM_Predio"));
+				orgao.setCidade(rs.getString("ORGAO_NM_Cidade"));
+				orgao.setEndereco(rs.getString("ORGAO_NM_Endereco"));
+				orgaos.add(orgao);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return orgaos;
+	}
+
+	
+	
 
 }

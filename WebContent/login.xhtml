@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
+	
 
 <h:head>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-
+	
 	<link rel="stylesheet" type="text/css" href="css/login.css"
 		media="screen" />
 
@@ -29,12 +32,25 @@
 	width: 80px;
 	font-size: 12px !important;
 }
+
+.ui-growl {
+
+	width: 370px;
+	
+}
+
+.ui-growl-title {
+    
+    text-align: center;
+    margin-left: -100px;
+    margin-top: 8px;
+}
 </style>
 </h:head>
 <h:body>
 
 	<h:form id="form">
-		<p:growl autoUpdate="true" life="2000" id="growl" />
+		<p:growl life="2000" id="growl" sticky="true" />
 		<div
 			style="background: url('imagens/login.jpg') no-repeat scroll left top; height: 439px; width: 781px; margin-left: 27%; margin-top: 10%">
 			<br />

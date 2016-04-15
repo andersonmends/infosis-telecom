@@ -1,6 +1,5 @@
 package br.jus.tjpe.infosistelecom.controle;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.annotation.PostConstruct;
@@ -10,9 +9,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import br.jus.tjpe.infosistelecom.dao.UsuarioDao;
 import br.jus.tjpe.infosistelecom.factory.LDAPConnectionFactory;
-import br.jus.tjpe.infosistelecom.factory.UsuarioDaoFactory;
+
 import br.jus.tjpe.infosistelecom.modelo.Usuario;
 
 @ManagedBean
@@ -58,6 +56,7 @@ public class LoginBean {
 
 	public void submit() throws IOException {
 		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);
 
 		usuario.setLogin(login);
 
@@ -66,19 +65,23 @@ public class LoginBean {
 			if (auth == true) {
 				context.addMessage(null, new FacesMessage("Login efetuado com sucesso"));
 				try {
-
-					HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-					session.setAttribute("usuario", usuario);
+					System.out.println("Login efetuado com sucesso");
+//					HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+//					session.setAttribute("usuario", usuario);
+					
+					FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuario);
 					context.getExternalContext().redirect("index.xhtml");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			} else {
 				context.addMessage(null, new FacesMessage("Login falhou"));
+				
 			}
 
 		} catch (NullPointerException e) {
 			context.addMessage(null, new FacesMessage("Login falhou"));
+			System.out.println("Login Falhou");
 		}
 
 		// try {
@@ -105,13 +108,13 @@ public class LoginBean {
 	}
 
 	public void logout() throws IOException {
-		System.out.println("TESTE");
 		FacesContext context = FacesContext.getCurrentInstance();
-		HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-		session.removeAttribute("usuario");
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+//		HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+//		session.removeAttribute("usuario");
 		context.addMessage(null, new FacesMessage("Logout efetuado com sucesso"));
 		context.getExternalContext().redirect("login.xhtml");
-		
 
 	}
 
