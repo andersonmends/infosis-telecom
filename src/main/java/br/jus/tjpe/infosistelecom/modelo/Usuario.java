@@ -6,6 +6,7 @@ public class Usuario {
 	private String matricula;
 	private String login;
 	private String permissao;
+	private String senha;
 
 	public String getLogin() {
 		return login;
@@ -30,6 +31,14 @@ public class Usuario {
 
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }
