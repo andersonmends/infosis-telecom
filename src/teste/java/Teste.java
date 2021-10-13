@@ -26,7 +26,7 @@ public class Teste {
 //		System.out.println(fotos.get(0).getEndereco());
 		
 		Usuario t = new Usuario();
-		t.setLogin("amesantos");
+		t.setLogin("????????");//apaguei o login para deixar no git
 
 		
 		UsuarioDao dao = UsuarioDaoFactory.createUsuarioDao();
