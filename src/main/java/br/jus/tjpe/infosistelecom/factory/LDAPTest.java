@@ -24,24 +24,12 @@ public class LDAPTest {
 	 */
 	public static void main(String[] args) throws LDAPException{
 
-		String baseDN = "OU=TJPE,DC=tjpe,DC=gov,DC=br";
+		String baseDN = "OU=????,DC=????,DC=???,DC=??"; // apaguei as informações para deixar no git público
 		String filter = "(objectClass=person)";
 
 		LDAPConnection connection =  getConnection();       
 		List<SearchResultEntry> results = getResults(connection, baseDN, filter);
-		
-	
-		
-//		String baseDN = "OU=Notebooks,OU=TJPE,DC=tjpe,DC=gov,DC=br";
-//		String userDN = "CN=TJPE70114,OU=Notebooks, OU=TJPE,DC=tjpe,DC=gov,DC=br";
-//
-//		String filterFormat = "(&(objectClass=user)(distinguishedName=%s))";
-//		String filter = String.format(filterFormat, userDN);
-//
-//		LDAPConnection connection =  LDAPTest.getConnection();
-//		List<SearchResultEntry> results = getResults(connection, baseDN, filter);
-		
-		
+			
 		
 		for (SearchResultEntry e : results) {
 		    System.out.println("name: " + e.getAttributeValue("name"));
@@ -55,7 +43,7 @@ public class LDAPTest {
 	public static LDAPConnection getConnection() throws LDAPException {
 		// host, port, username and password
 		System.out.println("Autenticado");
-		return new LDAPConnection("192.168.251.200", 389, "cursomed@tjpe.gov.br", "123456");
+		return new LDAPConnection("192.168.251.200", 389, "????????@????.???.br", "??????"); //apaguei login e senha para deixar no git
 		
 	}
 
