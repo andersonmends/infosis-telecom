@@ -8,8 +8,8 @@ ser desenvolvido usando o servidor comum do Java (Tomcat) com uso de JSF.
 
 ![screenshot01](https://github.com/andersonmends/infosis-telecom/blob/master/Screenshot_1.png)
 
-![screenshot01](https://github.com/andersonmends/infosis-telecom/blob/master/Screenshot_2.png)
+![screenshot02](https://github.com/andersonmends/infosis-telecom/blob/master/Screenshot_2.png)
 
-![screenshot01](https://github.com/andersonmends/infosis-telecom/blob/master/Screenshot_3.png)
+![screenshot03](https://github.com/andersonmends/infosis-telecom/blob/master/Screenshot_3.png)
 
-![screenshot01](https://github.com/andersonmends/infosis-telecom/blob/master/Screenshot_4.png)
+![screenshot04](https://github.com/andersonmends/infosis-telecom/blob/master/Screenshot_4.png)
