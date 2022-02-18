@@ -10,6 +10,6 @@ ser desenvolvido usando o servidor comum do Java (Tomcat) com uso de JSF.
 
 ![screenshot02](https://github.com/andersonmends/infosis-telecom/blob/master/img2.png)
 
-![screenshot03](https://github.com/andersonmends/infosis-telecom/blob/master/Screenshot_3.png)
+![screenshot03](https://github.com/andersonmends/infosis-telecom/blob/master/img3.png)
 
-![screenshot04](https://github.com/andersonmends/infosis-telecom/blob/master/Screenshot_4.png)
+![screenshot04](https://github.com/andersonmends/infosis-telecom/blob/master/img4.png)
